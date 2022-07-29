@@ -84,16 +84,6 @@ function Hero() {
           <TypographyH1 sx={{ mb: 2 }} variant="h1">
             Huyen Trang Tran Beauty Center Admin
           </TypographyH1>
-          <TypographyH2
-            sx={{ lineHeight: 1.5, pb: 4 }}
-            variant="h4"
-            color="text.secondary"
-            fontWeight="normal"
-          >
-            High performance React template built with lots of powerful
-            Material-UI components across multiple product niches for fast &
-            perfect apps development processes
-          </TypographyH2>
           <Button
             component={RouterLink}
             to="/dashboards/crypto"
