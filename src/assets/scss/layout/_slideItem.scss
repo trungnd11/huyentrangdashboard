@@ -33,5 +33,13 @@
         color: $white;
       }
     }
+
+    a.active {
+      border-bottom: 1px solid $main-color;
+      li {
+        color: $main-color;
+        font-weight: 600;
+      }
+    }
   }
 }

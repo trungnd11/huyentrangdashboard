@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { PageRouters } from "../../routers/allRouter";
 
 export default function SlideItem() {
   return (
     <div className="slide-item">
       <ul>
-        <NavLink to="#" >
-          <li>Ảnh Banner</li>
-        </NavLink>
-        <NavLink to="#">
-          <li>Dịch vụ</li>
-        </NavLink>
+        {PageRouters.map((router, index) => (
+          <NavLink key={index} to={router.path}>
+            <li>{ router.name }</li>
+          </NavLink>
+        ))}
       </ul>
     </div>
   );
