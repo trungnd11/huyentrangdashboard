@@ -1,0 +1,51 @@
+.slide-info {
+  width: 100%;
+  text-align: center;
+  .avatar {
+    position: relative;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    margin: auto;
+    border: 2px solid $blue;
+    z-index: -1;
+
+    .status-active {
+      border: 3px solid #fff;
+      border-radius: 50%;
+      bottom: 0;
+      height: 20px;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      width: 20px;
+      z-index: 1;
+
+      &::after {
+      position: absolute;
+      content: "";
+      width: 1rem;
+      height: 1rem;
+      right: 0;
+      bottom: 0;
+      background-color: green;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    }
+
+    img {
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .name {
+    p {
+      margin-bottom: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $main-color;
+    }
+  }
+}

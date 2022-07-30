@@ -1,9 +1,8 @@
-import "bootstrap/dist/css/bootstrap.css";
-
+import SlideBar from "./layout/slideBar/SlideBar";
 
 function App() {
   return <div className="App">
-    
+    <SlideBar />
   </div>;
 }
 

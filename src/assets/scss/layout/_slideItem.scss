@@ -1,0 +1,37 @@
+.slide-item {
+  margin-top: 2rem;
+  overflow: hidden;
+  ul {
+    list-style-type: none;
+
+    a {
+      position: relative;
+      display: block;
+      padding: 1.2rem 0 .3rem 0;
+      border-bottom: 1px solid $gray;
+      @include Transitions(.6s);
+
+      &:hover {
+        transform: translateX(1rem);
+        border-bottom: 1px solid transparent;
+        &::after {
+          width: 100%;
+        }
+      }
+      
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background-color: $white;
+        bottom: 0;
+        @include Transitions(.6s);
+      }
+
+      li {
+        color: $white;
+      }
+    }
+  }
+}

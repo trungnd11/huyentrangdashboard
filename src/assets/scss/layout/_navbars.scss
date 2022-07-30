@@ -1,0 +1,38 @@
+.nav-bars {
+  position: fixed;
+  width: 80vw;
+  height: 4rem;
+  right: 0;
+  z-index: 9;
+  border-bottom: 1px solid $gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $white;
+
+
+  .logo {
+    flex-basis: 20%;
+    text-align: center;
+    img {
+      width: 20%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      animation: turnLogo 6s infinite linear;
+    }
+  }
+
+  .brand-spa {
+    h5 {
+      font-family: Great Vibes,cursive;
+      font-size: 2rem;
+      color: $main-color;
+    }
+  }
+}
+
+@keyframes turnLogo {
+  from {
+    transform: rotate(360deg);
+  }
+}
