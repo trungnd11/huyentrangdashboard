@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 body {
   margin: 0;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -23,10 +24,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+body::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+body::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+}
 @import "./variable";
 @import "./responsive";
+@import "./components/card.scss";
+@import "./components/modal.scss";
 @import "./layout/slideBar";
 @import "./layout/slideInfo";
 @import "./layout/slideItem";
 @import "./layout/navbars";
 @import "./layout/content";
+@import "./page/banners.scss";

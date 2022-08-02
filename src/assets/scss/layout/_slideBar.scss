@@ -1,8 +1,9 @@
 .slide-bar {
+  width: 20%;
   position: fixed;
-  width: 20vw;
   height: 100vh;
   z-index: 10;
   padding: 1rem;
-  background-color: $blue;
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
 }
