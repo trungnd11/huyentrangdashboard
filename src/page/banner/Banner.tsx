@@ -1,14 +1,37 @@
 import { useEffect, useState } from "react";
 import Card from "../../components/card/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { fetBanners } from "../../stores/banner/banners";
+import FileBase64 from "react-file-base64";
+import { createBanners, fetBanners } from "../../stores/banner/banners";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
+
+interface BannerType {
+  _id: string,
+  img: string,
+  title: string,
+  content: string
+}
 
 export default function Banner() {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch<any>();
   const banners = useSelector(getBannerStore);
+  const [banner, setBanner] = useState<BannerType>({
+    img: "",
+    title: "",
+    content: "",
+    _id: ""
+  });
+
+  const handleCreateBanner = () => {
+    dispatch(createBanners({
+      img: banner.img,
+      title: banner.title,
+      content: banner.content
+    }));
+    setModalShow(false);
+  } 
 
   const FromBanner = (
     <form className="form-submit">
@@ -18,7 +41,12 @@ export default function Banner() {
           <i className="fa-solid fa-asterisk" />
         </div>
         <div className="col-12 col-md-10">
-          <input type="file" className="form-control" />
+          <FileBase64
+            value={banner?.img}
+            onDone={(file: any) =>
+              setBanner((pre) => ({ ...pre, img: file.base64 }))
+            }
+          />
         </div>
       </div>
       <div className="row mb-3">
@@ -30,6 +58,10 @@ export default function Banner() {
             type="text"
             className="form-control"
             placeholder="Nhập tiêu đề ảnh..."
+            value={banner?.title}
+            onChange={(e) =>
+              setBanner((pre) => ({ ...pre, title: e.target.value }))
+            }
           />
         </div>
       </div>
@@ -42,6 +74,10 @@ export default function Banner() {
             type="text"
             className="form-control"
             placeholder="Nhập nội dung ảnh..."
+            value={banner?.content}
+            onChange={(e) =>
+              setBanner((pre) => ({ ...pre, content: e.target.value }))
+            }
           />
         </div>
       </div>
@@ -75,7 +111,7 @@ export default function Banner() {
         show={modalShow}
         onHide={() => setModalShow(false)}
         title="Thêm ảnh mới"
-        handleClick={() => console.log("hello")}
+        handleClick={handleCreateBanner}
       >
         {FromBanner}
       </ModalCommom>

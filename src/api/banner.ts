@@ -2,8 +2,8 @@ import axios from "axios";
 import url from "./baseUrl";
 
 const bannerUrl = `${url}/banners`;
-interface BannerType {
-  _id: string,
+export interface BannerType {
+  _id?: string,
   title?: string;
   content?: string;
   img?: string;
