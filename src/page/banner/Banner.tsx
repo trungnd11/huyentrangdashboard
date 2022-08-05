@@ -9,12 +9,13 @@ import {
 } from "../../stores/banner/banners";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
+import Alert from "../../components/alert/Alert";
 
 interface BannerType {
-  _id: string,
-  img: string,
-  title: string,
-  content: string
+  _id: string;
+  img: string;
+  title: string;
+  content: string;
 }
 
 export default function Banner() {
@@ -26,16 +27,19 @@ export default function Banner() {
     img: "",
     title: "",
     content: "",
-    _id: ""
+    _id: "",
   });
 
   const handleCreateBanner = () => {
-    dispatch(createBanners({
-      img: banner.img,
-      title: banner.title,
-      content: banner.content
-    }));
+    dispatch(
+      createBanners({
+        img: banner.img,
+        title: banner.title,
+        content: banner.content,
+      })
+    );
     setModalShow(false);
+    Alert("success", "Thêm mới ảnh thành công");
   };
 
   const handleEditBanner = (banners: BannerType) => {
@@ -45,15 +49,16 @@ export default function Banner() {
       img,
       title,
       content,
-      _id
+      _id,
     });
     setModalShow(true);
-  }
+  };
 
   const updateBanner = () => {
     dispatch(updateBanners(banner));
     setModalShow(false);
-  }
+    Alert("success", "Cập nhật ảnh thành công");
+  };
 
   const FromBanner = (
     <form className="form-submit">
@@ -63,12 +68,15 @@ export default function Banner() {
           <i className="fa-solid fa-asterisk" />
         </div>
         <div className="col-12 col-md-10">
-          <FileBase64
-            value={banner?.img}
-            onDone={(file: any) =>
-              setBanner((pre) => ({ ...pre, img: file.base64 }))
-            }
-          />
+          <div className="filebase64-upload">
+            <FileBase64
+              multiple={false}
+              value={banner?.img}
+              onDone={(file: any) =>
+                setBanner((pre) => ({ ...pre, img: file.base64 }))
+              }
+            />
+          </div>
         </div>
       </div>
       <div className="row mb-3">
@@ -108,7 +116,7 @@ export default function Banner() {
 
   useEffect(() => {
     dispatch(fetBanners());
-  }, [dispatch])
+  }, [dispatch]);
   return (
     <div className="banners-page">
       <div className="row mt-3">
