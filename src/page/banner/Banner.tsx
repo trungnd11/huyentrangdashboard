@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import Card from "../../components/card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase64 from "react-file-base64";
-import { createBanners, fetBanners } from "../../stores/banner/banners";
+import {
+  createBanners,
+  fetBanners,
+  updateBanners,
+} from "../../stores/banner/banners";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
 
@@ -17,6 +21,7 @@ export default function Banner() {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch<any>();
   const banners = useSelector(getBannerStore);
+  const [status, setStatus] = useState("Create");
   const [banner, setBanner] = useState<BannerType>({
     img: "",
     title: "",
@@ -31,7 +36,24 @@ export default function Banner() {
       content: banner.content
     }));
     setModalShow(false);
-  } 
+  };
+
+  const handleEditBanner = (banners: BannerType) => {
+    setStatus("Update");
+    const { img, title, content, _id } = banners;
+    setBanner({
+      img,
+      title,
+      content,
+      _id
+    });
+    setModalShow(true);
+  }
+
+  const updateBanner = () => {
+    dispatch(updateBanners(banner));
+    setModalShow(false);
+  }
 
   const FromBanner = (
     <form className="form-submit">
@@ -93,7 +115,10 @@ export default function Banner() {
         <div className="col-12 col-md-6 col-lg-3">
           <button
             className="btn btn-primary"
-            onClick={() => setModalShow(true)}
+            onClick={() => {
+              setStatus("Create");
+              setModalShow(true);
+            }}
           >
             Thêm ảnh mới
           </button>
@@ -103,7 +128,13 @@ export default function Banner() {
         {!banners.loading &&
           banners.banners.map((item) => (
             <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
-              <Card img={item.img} title={item.title} content={item.content} />
+              <Card
+                img={item.img}
+                title={item.title}
+                content={item.content}
+                handleEdit={() => handleEditBanner(item)}
+                handleDelete={() => console.log("Del")}
+              />
             </div>
           ))}
       </div>
@@ -111,7 +142,7 @@ export default function Banner() {
         show={modalShow}
         onHide={() => setModalShow(false)}
         title="Thêm ảnh mới"
-        handleClick={handleCreateBanner}
+        handleClick={status === "Create" ? handleCreateBanner : updateBanner}
       >
         {FromBanner}
       </ModalCommom>
