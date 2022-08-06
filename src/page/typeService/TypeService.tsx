@@ -1,6 +1,4 @@
 
 export default function TypeService() {
-  return (
-    <div>TypeService</div>
-  )
+  return <div className="container-fluid">TypeService</div>;
 }

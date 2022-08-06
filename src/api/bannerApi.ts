@@ -14,3 +14,5 @@ export const createBanner = (banner: BannerType) => axios.post(bannerUrl, banner
 
 export const updateBanner = (banner: BannerType) =>
   axios.put(bannerUrl, banner);
+
+export const deleteBanner = (banner: BannerType) => axios.delete(`${bannerUrl}/${banner._id}`);

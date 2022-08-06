@@ -1,14 +1,64 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Collapse from "react-bootstrap/Collapse";
 import { PageRouters } from "../../routers/allRouter";
+import useFetch from "../../customHook/useFetch";
+import { getServiceType } from "../../api/serviceTypeApi";
 
 export default function SlideItem() {
+  const [open, setOpen] = useState(false);
+  const { loading, data } = useFetch(getServiceType);
+
   return (
     <div className="slide-item">
-      <ul>
+      <ul className="parents">
         {PageRouters.map((router, index) => (
-          <NavLink key={index} to={router.path}>
-            <li>{ router.name }</li>
-          </NavLink>
+          <div key={index}>
+            {!router.children ? (
+              <NavLink
+                className="item"
+                key={index}
+                to={router.path}
+                onClick={() => setOpen(false)}
+              >
+                <li>{router.name}</li>
+              </NavLink>
+            ) : (
+              <div>
+                <div
+                  className="d-flex justify-content-between item"
+                  onClick={() => setOpen(!open)}
+                >
+                  <li className="text-white">{router.name}</li>
+                  {open ? (
+                    <i
+                      className="fa-solid fa-angle-down pt-1 pe-3 text-white"
+                      onClick={() => setOpen(!open)}
+                    />
+                  ) : (
+                    <i
+                      className="fa-solid fa-angle-up pt-1 pe-3 text-white"
+                      onClick={() => setOpen(!open)}
+                    />
+                  )}
+                </div>
+                <Collapse in={open}>
+                  <ul className="ps-2">
+                    {!loading &&
+                      data.map((item: any, index: number) => (
+                        <NavLink
+                          className="item"
+                          key={index}
+                          to={`services/type-${item._id}`}
+                        >
+                          <li className="ms-3">{item.serviceType}</li>
+                        </NavLink>
+                      ))}
+                  </ul>
+                </Collapse>
+              </div>
+            )}
+          </div>
         ))}
       </ul>
     </div>

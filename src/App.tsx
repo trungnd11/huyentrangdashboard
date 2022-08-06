@@ -1,5 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import Content from "./layout/content/Content";
+import Footer from "./layout/footer/Footer";
 import NavBars from "./layout/navbar/NavBars";
 import SlideBar from "./layout/slideBar/SlideBar";
 import Routers from "./routers/Routers";
@@ -11,6 +12,7 @@ function App() {
       <NavBars />
       <Content>
         <Routers />
+        <Footer />
       </Content>
       <ToastContainer />
     </div>

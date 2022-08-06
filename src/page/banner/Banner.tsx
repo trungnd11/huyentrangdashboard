@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "../../components/card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase64 from "react-file-base64";
 import {
@@ -7,9 +6,10 @@ import {
   fetBanners,
   updateBanners,
 } from "../../stores/banner/banners";
+import Card from "../../components/card/Card";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
-import Alert from "../../components/alert/Alert";
+import Alert, { SweetAlertComfirm } from "../../components/alert/Alert";
 
 interface BannerType {
   _id: string;
@@ -60,6 +60,11 @@ export default function Banner() {
     Alert("success", "Cập nhật ảnh thành công");
   };
 
+  const handleDeleteBanner = (banner: BannerType) => {
+    
+    SweetAlertComfirm("Xác nhận", `Bạn chắc chắn xoá ảnh ${banner.title}`);
+  }
+
   const FromBanner = (
     <form className="form-submit">
       <div className="row mb-3">
@@ -100,8 +105,7 @@ export default function Banner() {
           <label htmlFor="">Nội dung</label>
         </div>
         <div className="col-12 col-md-10">
-          <input
-            type="text"
+          <textarea
             className="form-control"
             placeholder="Nhập nội dung ảnh..."
             value={banner?.content}
@@ -118,42 +122,52 @@ export default function Banner() {
     dispatch(fetBanners());
   }, [dispatch]);
   return (
-    <div className="banners-page">
-      <div className="row mt-3">
-        <div className="col-12 col-md-6 col-lg-3">
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setStatus("Create");
-              setModalShow(true);
-            }}
-          >
-            Thêm ảnh mới
-          </button>
+    <div className="container-fluid">
+      <div className="banners-page">
+        <div className="row mt-3">
+          <div className="col-12 col-md-6 col-lg-3">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setStatus("Create");
+                setModalShow(true);
+              }}
+            >
+              Thêm ảnh mới
+            </button>
+          </div>
         </div>
+        <div className="row">
+          {!banners.loading &&
+            banners.banners.map((item) => (
+              <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
+                <Card
+                  img={item.img}
+                  title={item.title}
+                  content={item.content}
+                  handleEdit={() => handleEditBanner(item)}
+                  handleDelete={() => handleDeleteBanner(item)}
+                />
+              </div>
+            ))}
+        </div>
+        <ModalCommom
+          show={modalShow}
+          onHide={() => {
+            setBanner({
+              img: "",
+              title: "",
+              content: "",
+              _id: "",
+            });
+            setModalShow(false);
+          }}
+          title={status === "Create" ? "Thêm ảnh mới" : "Cập nhật ảnh"}
+          handleClick={status === "Create" ? handleCreateBanner : updateBanner}
+        >
+          {FromBanner}
+        </ModalCommom>
       </div>
-      <div className="row">
-        {!banners.loading &&
-          banners.banners.map((item) => (
-            <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
-              <Card
-                img={item.img}
-                title={item.title}
-                content={item.content}
-                handleEdit={() => handleEditBanner(item)}
-                handleDelete={() => console.log("Del")}
-              />
-            </div>
-          ))}
-      </div>
-      <ModalCommom
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        title="Thêm ảnh mới"
-        handleClick={status === "Create" ? handleCreateBanner : updateBanner}
-      >
-        {FromBanner}
-      </ModalCommom>
     </div>
   );
 }

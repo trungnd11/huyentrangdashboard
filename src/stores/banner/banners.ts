@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getBanners, createBanner, updateBanner ,BannerType } from "../../api/banner";
+import { getBanners, createBanner, updateBanner ,BannerType } from "../../api/bannerApi";
 
 const Banners:any[] = []
 

@@ -1,6 +1,4 @@
 
 export default function Experience() {
-  return (
-    <div>Experience</div>
-  )
+  return <div className="container-fluid">Experience</div>;
 }

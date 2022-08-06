@@ -5,11 +5,11 @@ import Experience from "../page/experience/Experience";
 import Expert from "../page/expert/Expert";
 import Services from "../page/services/Services";
 import TypeService from "../page/typeService/TypeService";
-
 interface RoutersType {
   name: string,
   path: string,
-  component: FC
+  component: FC,
+  children?: boolean
 }
 
 export const PageRouters: RoutersType[] = [
@@ -35,12 +35,13 @@ export const PageRouters: RoutersType[] = [
   },
   {
     name: "Dịch vụ",
-    path: "/services",
+    path: "/services/type-:type",
     component: Services,
+    children: true,
   },
   {
     name: "Chuyên gia",
     path: "/experts",
     component: Expert,
-  }
+  },
 ];

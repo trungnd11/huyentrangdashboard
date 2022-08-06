@@ -1,14 +1,15 @@
 .slide-item {
   margin-top: 2rem;
   overflow: hidden;
-  ul {
+  .parents {
     list-style-type: none;
 
-    a {
+    .item {
       position: relative;
       display: block;
       padding: 1.2rem 0 .3rem 0;
       border-bottom: 1px solid $gray;
+      cursor: pointer;
       @include Transitions(.6s);
 
       &:hover {
@@ -31,6 +32,7 @@
 
       li {
         color: $white;
+        position: relative;
       }
     }
 
@@ -39,6 +41,23 @@
       li {
         color: $main-color;
         font-weight: 600;
+      }
+    }
+
+    .btn-arrow {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .childs {
+      padding-left: 1rem;
+      padding-top: 1rem;
+
+      .child-item {
+        border-bottom: 1px solid transparent;
+        margin: 1rem 0;
       }
     }
   }

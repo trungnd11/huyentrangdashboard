@@ -10,7 +10,6 @@
   justify-content: space-between;
   background-color: $white;
 
-
   .logo {
     flex-basis: 10%;
     height: 100%;
@@ -20,7 +19,7 @@
     justify-content: center;
     align-items: center;
     img {
-      width: 4.5rem;
+      width: 4rem;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       animation: turnLogo 6s infinite linear;

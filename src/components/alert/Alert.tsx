@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 export default function Alert(status?: string, title?: string) {
   return (
@@ -8,3 +9,27 @@ export default function Alert(status?: string, title?: string) {
     </div>
   );
 }
+
+export const SweetAlertComfirm = (
+  alertMessage?: string,
+  message?: string,
+  callback?: any,
+  callbackCancel?: any
+) => {
+  Swal.fire({
+    title: alertMessage,
+    text: message,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Xoá ngay",
+    cancelButtonText: "Không xoá"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      callback();
+    } else if (result.isDismissed) {
+      callbackCancel();
+    }
+  });
+};
