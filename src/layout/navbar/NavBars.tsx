@@ -7,7 +7,7 @@ export default function NavBars() {
         <img src={logo} alt="1" />
       </div>
       <div className="brand-spa mt-1">
-        <h5 className="mb-0">Huyen Trang Tran Beauty Center Dashboard</h5>
+        <h5 className="mb-0">Huyen Trang Tran Beauty Center</h5>
       </div>
       <div className="logo">
         <img src={logo} alt="1" />

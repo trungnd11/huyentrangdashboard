@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getServicesByType } from "../../api/servicesApi";
@@ -15,7 +16,13 @@ export default function Services() {
   const { type } = useParams();
   const [services, setServices] = useState({
     loading: true,
-    data: [],
+    data: [{
+      description: "",
+      name: "",
+      serviceType: "",
+      image: "",
+      _id: "",
+    }],
     error: ""
   })
 
@@ -26,13 +33,15 @@ export default function Services() {
         ...pre,
         loading: false,
         data: res.data
-      }))
+      }));
+
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
+    document.title = `Dịch vụ - ${services.data[0].serviceType}`;
     getServicesByTypes({ serviceType: type });
   }, [type])
 

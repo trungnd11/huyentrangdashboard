@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { getExperts } from "../../api/expertApi";
 import Card from "../../components/card/Card";
 import useFetch from "../../customHook/useFetch";
@@ -16,6 +17,11 @@ interface ExpertType {
 
 export default function Expert() {
   const { data, loading } = useFetch(getExperts);
+
+  useEffect(() => {
+    document.title = "Admin - Chuyên gia";
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="expert-page">

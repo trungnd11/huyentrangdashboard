@@ -8,7 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: $white;
+  background-image: radial-gradient( circle 610px at 5.2% 51.6%,  rgba(5,8,114,1) 0%, rgba(7,3,53,1) 97.5% );
+
+  @include Responsive(XS) {
+    display: none;
+  }
 
   .logo {
     flex-basis: 10%;

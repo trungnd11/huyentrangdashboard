@@ -6,6 +6,14 @@
     left: 0.2rem;
     bottom: 0.5rem;
   }
+
+  .img-update {
+    img {
+      width: 100%;
+      aspect-ratio: 1 / .6;
+      object-fit: cover;
+    }
+  }
 }
 
 .filebase64-upload input[type="file"] {

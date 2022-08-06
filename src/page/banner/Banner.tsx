@@ -10,6 +10,7 @@ import Card from "../../components/card/Card";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
 import Alert, { SweetAlertComfirm } from "../../components/alert/Alert";
+import { deleteBanner } from "../../api/bannerApi";
 
 interface BannerType {
   _id: string;
@@ -31,15 +32,19 @@ export default function Banner() {
   });
 
   const handleCreateBanner = () => {
-    dispatch(
-      createBanners({
-        img: banner.img,
-        title: banner.title,
-        content: banner.content,
-      })
-    );
-    setModalShow(false);
-    Alert("success", "Thêm mới ảnh thành công");
+    try {
+      dispatch(
+        createBanners({
+          img: banner.img,
+          title: banner.title,
+          content: banner.content,
+        })
+      );
+      setModalShow(false);
+      Alert("success", "Thêm mới ảnh thành công");
+    } catch (error) {
+      Alert("error", "Lỗi hệ thống");
+    }
   };
 
   const handleEditBanner = (banners: BannerType) => {
@@ -55,14 +60,30 @@ export default function Banner() {
   };
 
   const updateBanner = () => {
-    dispatch(updateBanners(banner));
-    setModalShow(false);
-    Alert("success", "Cập nhật ảnh thành công");
+    try {
+      dispatch(updateBanners(banner));
+      setModalShow(false);
+      Alert("success", "Cập nhật ảnh thành công");
+    } catch (error) {
+      Alert("error", "Lỗi hệ thống");
+    }
   };
 
   const handleDeleteBanner = (banner: BannerType) => {
-    
-    SweetAlertComfirm("Xác nhận", `Bạn chắc chắn xoá ảnh ${banner.title}`);
+    const deleteBanners = async () => {
+      try {
+        await deleteBanner(banner);
+        Alert("error", "Xoá ảnh thành công");
+        dispatch(fetBanners());
+      } catch (error) {
+        Alert("error", "Lỗi hệ thống");
+      }
+    }
+    SweetAlertComfirm(
+      "Xác nhận",
+      `Bạn chắc chắn xoá ảnh ${banner.title}`,
+      deleteBanners
+    );
   }
 
   const FromBanner = (
@@ -74,6 +95,11 @@ export default function Banner() {
         </div>
         <div className="col-12 col-md-10">
           <div className="filebase64-upload">
+            {banner.img && (
+              <div className="img-update mb-3">
+                <img src={banner.img} alt={banner.title} />
+              </div>
+            )}
             <FileBase64
               multiple={false}
               value={banner?.img}
@@ -119,6 +145,7 @@ export default function Banner() {
   );
 
   useEffect(() => {
+    document.title = "Admin - Ảnh bìa"
     dispatch(fetBanners());
   }, [dispatch]);
   return (

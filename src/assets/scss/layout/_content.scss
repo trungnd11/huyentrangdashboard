@@ -6,4 +6,8 @@
   flex-direction: column;
   height: calc(100vh - 5rem);
   justify-content: space-between;
+
+  @include Responsive(XS) {
+    width: 100%;
+  }
 }
