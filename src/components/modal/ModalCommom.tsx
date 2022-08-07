@@ -5,7 +5,7 @@ export default function ModalCommom(props: any) {
   return (
     <Modal
       {...rest}
-      size="lg"
+      size={rest.size || "lg"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

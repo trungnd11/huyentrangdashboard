@@ -6,7 +6,7 @@ import instagram from "../../statics/Icons/instagram.png";
 export default function Card(prop: any) {
   const { img, title, content, ...rest } = prop;
   return (
-    <div className="card h-100 card-style">
+    <div className="card h-100 card-style shadow">
       <img src={img} className="card-img-top" alt="..." />
       <div className="card-body d-flex flex-column justify-content-between">
         <div className="description">

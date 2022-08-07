@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FileBase64 from "react-file-base64";
 import {
   createBanners,
   fetBanners,
@@ -11,10 +10,12 @@ import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
 import Alert, { SweetAlertComfirm } from "../../components/alert/Alert";
 import { deleteBanner } from "../../api/bannerApi";
+import { uploadImageToFireBase } from "../../firebase/uploadImage";
+import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 
 interface BannerType {
   _id: string;
-  img: string;
+  img?: any;
   title: string;
   content: string;
 }
@@ -30,21 +31,35 @@ export default function Banner() {
     content: "",
     _id: "",
   });
+  const [image, setImage] = useState<any>();
 
   const handleCreateBanner = () => {
-    try {
-      dispatch(
-        createBanners({
-          img: banner.img,
-          title: banner.title,
-          content: banner.content,
-        })
-      );
-      setModalShow(false);
-      Alert("success", "Thêm mới ảnh thành công");
-    } catch (error) {
-      Alert("error", "Lỗi hệ thống");
-    }
+    const saveToDataBase = (imgUrl: string) => {
+      try {
+        dispatch(
+          createBanners({
+            img: imgUrl,
+            title: banner.title,
+            content: banner.content,
+          })
+        );
+        setImage(null);
+        setBanner({
+          img: "",
+          title: "",
+          content: "",
+          _id: "",
+        });
+        setModalShow(false);
+        Alert("success", "Thêm mới ảnh thành công");
+      } catch (error) {
+        Alert("error", "Lỗi hệ thống");
+      }
+    };
+
+    uploadImageToFireBase("banner", image, (url: string) =>
+      saveToDataBase(url)
+    );
   };
 
   const handleEditBanner = (banners: BannerType) => {
@@ -60,13 +75,49 @@ export default function Banner() {
   };
 
   const updateBanner = () => {
-    try {
-      dispatch(updateBanners(banner));
-      setModalShow(false);
-      Alert("success", "Cập nhật ảnh thành công");
-    } catch (error) {
-      Alert("error", "Lỗi hệ thống");
-    }
+    const updateToDataBase = (url: string) => {
+      try {
+        dispatch(
+          updateBanners({
+            ...banner,
+            img: url,
+          })
+        );
+        setImage(null);
+        setBanner({
+          img: "",
+          title: "",
+          content: "",
+          _id: "",
+        });
+        setModalShow(false);
+        Alert("success", "Cập nhật ảnh thành công");
+      } catch (error) {
+        Alert("error", "Lỗi hệ thống");
+      }
+    };
+
+    const updateNotImage = () => {
+      try {
+        dispatch(updateBanners(banner));
+        setImage(null);
+        setBanner({
+          img: "",
+          title: "",
+          content: "",
+          _id: "",
+        });
+        setModalShow(false);
+        Alert("success", "Cập nhật ảnh thành công");
+      } catch (error) {
+        Alert("error", "Lỗi hệ thống");
+      }
+    };
+    image
+      ? uploadImageToFireBase("banner", image, (url: string) =>
+          updateToDataBase(url)
+        )
+      : updateNotImage();
   };
 
   const handleDeleteBanner = (banner: BannerType) => {
@@ -78,13 +129,19 @@ export default function Banner() {
       } catch (error) {
         Alert("error", "Lỗi hệ thống");
       }
-    }
+    };
     SweetAlertComfirm(
       "Xác nhận",
       `Bạn chắc chắn xoá ảnh ${banner.title}`,
       deleteBanners
     );
-  }
+  };
+
+  const handleChangeImg = (e: any) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
 
   const FromBanner = (
     <form className="form-submit">
@@ -95,17 +152,18 @@ export default function Banner() {
         </div>
         <div className="col-12 col-md-10">
           <div className="filebase64-upload">
-            {banner.img && (
+            {banner.img || image ? (
               <div className="img-update mb-3">
-                <img src={banner.img} alt={banner.title} />
+                <img
+                  src={(image && URL.createObjectURL(image)) || banner.img}
+                  alt={banner.title}
+                />
               </div>
-            )}
-            <FileBase64
-              multiple={false}
-              value={banner?.img}
-              onDone={(file: any) =>
-                setBanner((pre) => ({ ...pre, img: file.base64 }))
-              }
+            ) : null}
+            <input
+              type="file"
+              className="form-control"
+              onChange={handleChangeImg}
             />
           </div>
         </div>
@@ -145,7 +203,7 @@ export default function Banner() {
   );
 
   useEffect(() => {
-    document.title = "Admin - Ảnh bìa"
+    document.title = "Admin - Ảnh bìa";
     dispatch(fetBanners());
   }, [dispatch]);
   return (
@@ -153,15 +211,12 @@ export default function Banner() {
       <div className="banners-page">
         <div className="row mt-3">
           <div className="col-12 col-md-6 col-lg-3">
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setStatus("Create");
-                setModalShow(true);
-              }}
-            >
+            <ButtonCreated handleClick={() => {
+              setStatus("Create");
+              setModalShow(true);
+            }}>
               Thêm ảnh mới
-            </button>
+            </ButtonCreated>
           </div>
         </div>
         <div className="row">
@@ -181,6 +236,7 @@ export default function Banner() {
         <ModalCommom
           show={modalShow}
           onHide={() => {
+            setImage(null);
             setBanner({
               img: "",
               title: "",
