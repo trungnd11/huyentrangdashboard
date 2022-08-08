@@ -32,12 +32,12 @@ export default function SlideItem() {
                   <li className="text-white">{router.name}</li>
                   {open ? (
                     <i
-                      className="fa-solid fa-angle-down pt-1 pe-3 text-white"
+                      className="fa-solid fa-angle-up pt-1 pe-3 text-white"
                       onClick={() => setOpen(!open)}
                     />
                   ) : (
                     <i
-                      className="fa-solid fa-angle-up pt-1 pe-3 text-white"
+                      className="fa-solid fa-angle-down pt-1 pe-3 text-white"
                       onClick={() => setOpen(!open)}
                     />
                   )}
