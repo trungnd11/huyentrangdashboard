@@ -1,4 +1,5 @@
 import { FC } from "react";
+import TextEditor from "../components/textEdit/TextEditor";
 import About from "../page/about/About";
 import Banner from "../page/banner/Banner";
 import Experience from "../page/experience/Experience";
@@ -46,8 +47,8 @@ export const PageRouters: RoutersType[] = [
   },
   {
     name: "Địa chỉ",
-    path: "/experts",
-    component: Expert,
+    path: "/address",
+    component: TextEditor,
   },
   {
     name: "Số điện thoại",
