@@ -1,20 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getServicesByType } from "../../api/servicesApi";
+import { getServicesByType, ServiceType } from "../../api/servicesApi";
 import { getServiceType, TypeServiceType } from "../../api/serviceTypeApi";
+import Alert from "../../components/alert/Alert";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";
 import ModalCommom from "../../components/modal/ModalCommom";
 import useFetch from "../../customHook/useFetch";
 
-interface ServiceType {
-  description: string;
-  name: string;
-  serviceType: string;
-  image: string
-  _id: string;
-}
 
 export default function Services() {
   const { type } = useParams();
@@ -30,8 +24,10 @@ export default function Services() {
       _id: "",
     }],
     error: ""
-  })
+  });
   const { loading, data } = useFetch(getServiceType);
+  const [service, setService] = useState<ServiceType>();
+  const [image, setImage] = useState<any>();
 
   const getServicesByTypes = async (typeService: { serviceType?: string }) => {
     try {
@@ -43,8 +39,16 @@ export default function Services() {
       }));
 
     } catch (error) {
-      console.log(error);
+      Alert("error", "Lỗi hệ thống");
     }
+  };
+
+  const handleCreateService = () => {
+    console.log(service);
+  }
+
+  const handleUpdateService = () => {
+    console.log("Update");
   };
 
   const FromService = (
@@ -54,9 +58,24 @@ export default function Services() {
           <label htmlFor="">Chọn loại dịch vụ</label>
         </div>
         <div className="col-12 col-md-10">
-          <select className="form-control" name="" id="">
+          <select
+            className="form-control"
+            name=""
+            id=""
+            onChange={(e: any) =>
+              setService((pre: any) => ({
+                ...pre,
+                serviceType: e.target.value,
+              }))
+            }
+          >
             <option value="">Chọn loại dịch vụ</option>
-            {!loading && data.map((item: TypeServiceType) => <option value={item._id}>{ item.serviceType }</option>)}
+            {!loading &&
+              data.map((item: TypeServiceType) => (
+                <option key={item._id} value={item._id}>
+                  {item.serviceType}
+                </option>
+              ))}
           </select>
         </div>
       </div>
@@ -65,7 +84,23 @@ export default function Services() {
           <label htmlFor="">Chọn ảnh</label>
         </div>
         <div className="col-12 col-md-10">
-          <input type="file" className="form-control" />
+          {service?.image || image ? (
+            <div className="img-update mb-3">
+              <img
+                src={(image && URL.createObjectURL(image)) || service?.image}
+                alt={service?.name}
+              />
+            </div>
+          ) : null}
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e: any) => {
+              if (e.target.files[0]) {
+                setImage(e.target.files[0]);
+              }
+            }}
+          />
         </div>
       </div>
       <div className="row mb-3">
@@ -73,7 +108,17 @@ export default function Services() {
           <label htmlFor="">Tên dịch vụ</label>
         </div>
         <div className="col-12 col-md-10">
-          <input type="text" className="form-control" />
+          <input
+            type="text"
+            className="form-control"
+            value={service?.name}
+            onChange={(e: any) =>
+              setService((pre: any) => ({
+                ...pre,
+                name: e.target.value,
+              }))
+            }
+          />
         </div>
       </div>
       <div className="row mb-3">
@@ -81,7 +126,16 @@ export default function Services() {
           <label htmlFor="">Mô tả</label>
         </div>
         <div className="col-12 col-md-10">
-          <textarea className="form-control" />
+          <textarea
+            className="form-control"
+            value={service?.description}
+            onChange={(e: any) =>
+              setService((pre: any) => ({
+                ...pre,
+                description: e.target.value,
+              }))
+            }
+          />
         </div>
       </div>
     </form>
@@ -116,6 +170,12 @@ export default function Services() {
                     img={item.image}
                     title={item.name}
                     content={item.description}
+                    handleEdit={() => {
+                      setStatus("Update");
+                      setService(item);
+                      setModalShow(true);
+                    }}
+                    handleDelete={() => alert("OK")}
                   />
                 </div>
               ))}
@@ -126,8 +186,16 @@ export default function Services() {
         show={modalShow}
         onHide={() => {
           setModalShow(false);
+          setService({
+            description: "",
+            name: "",
+            serviceType: "",
+            image: "",
+            _id: "",
+          });
         }}
         title={status === "Create" ? "Thêm dịch vụ mới" : "Cập nhật dịch vụ"}
+        handleClick={status === "Create" ? handleCreateService : handleUpdateService}
       >
         {FromService}
       </ModalCommom>
