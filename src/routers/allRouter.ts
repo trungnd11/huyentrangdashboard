@@ -44,4 +44,14 @@ export const PageRouters: RoutersType[] = [
     path: "/experts",
     component: Expert,
   },
+  {
+    name: "Địa chỉ",
+    path: "/experts",
+    component: Expert,
+  },
+  {
+    name: "Số điện thoại",
+    path: "/experts",
+    component: Expert,
+  },
 ];
