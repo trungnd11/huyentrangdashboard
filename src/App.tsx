@@ -8,13 +8,13 @@ import Routers from "./routers/Routers";
 function App() {
   return (
     <div className="App">
-      <SlideBar />
-      <NavBars />
-      <Content>
-        <Routers />
-        <Footer />
-      </Content>
-      <ToastContainer />
+        <SlideBar />
+        <NavBars />
+        <Content>
+          <Routers />
+          <Footer />
+        </Content>
+        <ToastContainer />
     </div>
   );
 }
