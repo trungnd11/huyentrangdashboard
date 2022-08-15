@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getServicesByType, ServiceType } from "../../api/servicesApi";
-import { getServiceType, TypeServiceType } from "../../api/serviceTypeApi";
+import { getServiceType } from "../../api/serviceTypeApi";
+import { TypeServiceType } from "../../model/serviceTypeModel";
 import Alert from "../../components/alert/Alert";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";

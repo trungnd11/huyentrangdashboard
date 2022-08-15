@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import useFetch from "../../customHook/useFetch";
 import {
   getServiceType,
-  TypeServiceType,
   createServiceType,
   deleteServiceType,
   updateServiceType,
 } from "../../api/serviceTypeApi";
+import { TypeServiceType } from "../../model/serviceTypeModel";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ItemList from "../../components/list/ItemList";
 import ModalCommom from "../../components/modal/ModalCommom";
@@ -77,6 +77,7 @@ export default function TypeService() {
       }
     };
 
+    setModalShow(false);
     uploadImageToFireBase("Type-service", showImg, (url: string) =>
       saveToDataBase(url)
     );
@@ -117,6 +118,7 @@ export default function TypeService() {
       }
     }
 
+    setModalShow(false);
     showImg
       ? uploadImageToFireBase("Type-service", showImg, (url: string) =>
           updateToDataBase(url)

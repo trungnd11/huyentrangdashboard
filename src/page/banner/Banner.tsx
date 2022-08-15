@@ -56,7 +56,8 @@ export default function Banner() {
         Alert("error", "Lỗi hệ thống");
       }
     };
-
+  
+    setModalShow(false);
     uploadImageToFireBase("banner", image, (url: string) =>
       saveToDataBase(url)
     );
@@ -113,6 +114,8 @@ export default function Banner() {
         Alert("error", "Lỗi hệ thống");
       }
     };
+  
+    setModalShow(false);
     image
       ? uploadImageToFireBase("banner", image, (url: string) =>
           updateToDataBase(url)

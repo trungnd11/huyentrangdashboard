@@ -1,14 +1,8 @@
 import axios from "axios";
 import url from "./baseUrl";
+import { TypeServiceType } from "../model/serviceTypeModel";
 
 const serviceTypeUrl = `${url}/service-type`;
-
-export interface TypeServiceType {
-  _id?: string;
-  serviceType: string;
-  description: string;
-  image: string
-}
 
 export const getServiceType = () => axios.get(serviceTypeUrl);
 
