@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { getAddress } from "../../api/addressApi";
-import { AddressModel } from "../../model/AddressModel";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ItemList from "../../components/list/ItemList";
 import ModalCommom from "../../components/modal/ModalCommom";
 import useFetch from "../../customHook/useFetch";
+
+interface AddressModel {
+  _id: string;
+  apartmentNumber: string;
+  commune: string;
+  district: string;
+  conscious: string;
+}
 
 export default function Address() {
   const [modalShow, setModalShow] = useState(false);
