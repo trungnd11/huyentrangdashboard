@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getServicesByType, ServiceType } from "../../api/servicesApi";
+import { getServicesByType } from "../../api/servicesApi";
 import { getServiceType } from "../../api/serviceTypeApi";
-import { TypeServiceType } from "../../model/serviceTypeModel";
+import { TypeServiceModel } from "../../model/ServiceTypeModel";
 import Alert from "../../components/alert/Alert";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";
 import ModalCommom from "../../components/modal/ModalCommom";
 import useFetch from "../../customHook/useFetch";
+import { ServiceModel } from "../../model/ServiceModel";
 
 
 export default function Services() {
@@ -27,7 +28,7 @@ export default function Services() {
     error: ""
   });
   const { loading, data } = useFetch(getServiceType);
-  const [service, setService] = useState<ServiceType>();
+  const [service, setService] = useState<ServiceModel>();
   const [image, setImage] = useState<any>();
 
   const getServicesByTypes = async (typeService: { serviceType?: string }) => {
@@ -72,7 +73,7 @@ export default function Services() {
           >
             <option value="">Chọn loại dịch vụ</option>
             {!loading &&
-              data.map((item: TypeServiceType) => (
+              data.map((item: TypeServiceModel) => (
                 <option key={item._id} value={item._id}>
                   {item.serviceType}
                 </option>
@@ -165,7 +166,7 @@ export default function Services() {
           </div>
           <div className="row">
             {!services.loading &&
-              services.data.map((item: ServiceType) => (
+              services.data.map((item: ServiceModel) => (
                 <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
                   <Card
                     img={item.image}

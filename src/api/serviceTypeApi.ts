@@ -1,15 +1,15 @@
 import axios from "axios";
 import url from "./baseUrl";
-import { TypeServiceType } from "../model/serviceTypeModel";
+import { TypeServiceModel } from "../model/ServiceTypeModel";
 
 const serviceTypeUrl = `${url}/service-type`;
 
 export const getServiceType = () => axios.get(serviceTypeUrl);
 
-export const createServiceType = (serviceType: TypeServiceType) =>
+export const createServiceType = (serviceType: TypeServiceModel) =>
   axios.post(serviceTypeUrl, serviceType);
 
-export const updateServiceType = (serviceType: TypeServiceType) =>
+export const updateServiceType = (serviceType: TypeServiceModel) =>
   axios.put(serviceTypeUrl, serviceType);
 
 export const deleteServiceType = (id: any) => axios.delete(`${serviceTypeUrl}/${id}`);

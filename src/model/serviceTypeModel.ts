@@ -1,4 +1,4 @@
-export interface TypeServiceType {
+export interface TypeServiceModel {
   _id?: string;
   serviceType: string;
   description: string;

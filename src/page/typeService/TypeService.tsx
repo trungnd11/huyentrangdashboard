@@ -8,7 +8,7 @@ import {
   deleteServiceType,
   updateServiceType,
 } from "../../api/serviceTypeApi";
-import { TypeServiceType } from "../../model/serviceTypeModel";
+import { TypeServiceModel } from "../../model/ServiceTypeModel";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ItemList from "../../components/list/ItemList";
 import ModalCommom from "../../components/modal/ModalCommom";
@@ -20,35 +20,37 @@ export default function TypeService() {
   const [status, setStatus] = useState("Create");
   const { loading, data } = useFetch(getServiceType);
   const [listTypeService, setListTypeService] = useState<any>();
-  const [typeService, setTypeService] = useState<TypeServiceType>({
+  const [typeService, setTypeService] = useState<TypeServiceModel>({
     _id: "",
     image: "",
     description: "",
-    serviceType: ""
+    serviceType: "",
   });
   const [showImg, setShowImg] = useState<any>();
 
-  const handleEditTypeService = (item: TypeServiceType) => {
+  const handleEditTypeService = (item: TypeServiceModel) => {
     setStatus("Update");
-    setTypeService(pre => ({
+    setTypeService((pre) => ({
       image: item.image,
       serviceType: item.serviceType,
       description: item.description,
-      _id: item._id
+      _id: item._id,
     }));
     setModalShow(true);
   };
 
-  const handleDeleteTypeService = (item: TypeServiceType) => {
+  const handleDeleteTypeService = (item: TypeServiceModel) => {
     const deleteTypeService = async () => {
       try {
         await deleteServiceType(item._id);
         Alert("error", "Xoá ảnh thành công");
-        setListTypeService((pre: any) => pre.filter((type: TypeServiceType) => type._id !== item._id));
+        setListTypeService((pre: any) =>
+          pre.filter((type: TypeServiceModel) => type._id !== item._id)
+        );
       } catch (error) {
         Alert("error", "Lỗi hệ thống");
       }
-    }
+    };
 
     SweetAlertComfirm(
       "Xác nhận",
@@ -93,7 +95,7 @@ export default function TypeService() {
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
         const updateTypes = listTypeService.filter(
-          (item: TypeServiceType) => res.data._id !== item._id
+          (item: TypeServiceModel) => res.data._id !== item._id
         );
         setListTypeService([
           ...updateTypes,
@@ -110,7 +112,7 @@ export default function TypeService() {
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
         const updateTypes = listTypeService.filter(
-          (item: TypeServiceType) => res.data._id !== item._id
+          (item: TypeServiceModel) => res.data._id !== item._id
         );
         setListTypeService([...updateTypes, res.data]);
       } catch (error) {
@@ -203,7 +205,7 @@ export default function TypeService() {
           </div>
           <div className="list-serviceType">
             {listTypeService &&
-              listTypeService.map((item: TypeServiceType) => (
+              listTypeService.map((item: TypeServiceModel) => (
                 <ItemList
                   key={item._id}
                   img={item.image}

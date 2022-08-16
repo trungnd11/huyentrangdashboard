@@ -1,18 +1,14 @@
 import axios from "axios";
 import url from "./baseUrl";
+import { BannerModel } from "../model/BannerModel";
 
 const bannerUrl = `${url}/banners`;
-export interface BannerType {
-  _id?: string,
-  title?: string;
-  content?: string;
-  img?: string;
-}
+
 export const getBanners = () => axios.get(bannerUrl);
 
-export const createBanner = (banner: BannerType) => axios.post(bannerUrl, banner);
+export const createBanner = (banner: BannerModel) => axios.post(bannerUrl, banner);
 
-export const updateBanner = (banner: BannerType) =>
+export const updateBanner = (banner: BannerModel) =>
   axios.put(bannerUrl, banner);
 
-export const deleteBanner = (banner: BannerType) => axios.delete(`${bannerUrl}/${banner._id}`);
+export const deleteBanner = (banner: BannerModel) => axios.delete(`${bannerUrl}/${banner._id}`);

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getBanners, createBanner, updateBanner ,BannerType } from "../../api/bannerApi";
+import { getBanners, createBanner, updateBanner } from "../../api/bannerApi";
+import { BannerModel } from "../../model/BannerModel";
 
 const Banners:any[] = []
 
@@ -15,7 +16,7 @@ export const fetBanners = createAsyncThunk("banners/fetlist", async () => {
 
 export const createBanners = createAsyncThunk(
   "banners/create",
-  async (banner: BannerType) => {
+  async (banner: BannerModel) => {
     const res = await createBanner(banner);
     return res.data;
   }
@@ -23,7 +24,7 @@ export const createBanners = createAsyncThunk(
 
 export const updateBanners = createAsyncThunk(
   "banners/update",
-  async (banner: BannerType) => {
+  async (banner: BannerModel) => {
     const res = await updateBanner(banner);
     return res.data;
   }
