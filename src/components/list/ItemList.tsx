@@ -11,10 +11,15 @@ export default function ItemList(prop: {
     district: string;
     conscious: string;
   };
+  phone?: {
+    phoneNumber: number;
+    nameUser: string;
+    position: string;
+  };
   handleEdit?: any;
   handleDelete?: any;
 }) {
-  const { img, title, content, address, handleEdit, handleDelete } = prop;
+  const { img, title, content, address, phone, handleEdit, handleDelete } = prop;
   return (
     <div className="item-list shadow mt-3">
       <div className="row">
@@ -35,6 +40,14 @@ export default function ItemList(prop: {
                     <span>{address.commune}</span>
                     <span className="mx-2">{address.conscious}</span>
                     <span>{address.district}</span>
+                  </div>
+                </div>
+              ) : phone ? (
+                <div className="mb-3">
+                  <h4>Số điện thoại: 0{phone.phoneNumber}</h4>
+                  <div>
+                    <h5>{phone.nameUser}</h5>
+                    <p className="">{phone.position}</p>
                   </div>
                 </div>
               ) : (

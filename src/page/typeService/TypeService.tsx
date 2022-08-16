@@ -204,17 +204,21 @@ export default function TypeService() {
             </div>
           </div>
           <div className="list-serviceType">
-            {listTypeService &&
-              listTypeService.map((item: TypeServiceModel) => (
-                <ItemList
-                  key={item._id}
-                  img={item.image}
-                  title={item.serviceType}
-                  content={item.description}
-                  handleEdit={() => handleEditTypeService(item)}
-                  handleDelete={() => handleDeleteTypeService(item)}
-                />
+            <div className="row">
+              {listTypeService &&
+                listTypeService.map((item: TypeServiceModel) => (
+                <div className="col-12 col-md-6">
+                  <ItemList
+                    key={item._id}
+                    img={item.image}
+                    title={item.serviceType}
+                    content={item.description}
+                    handleEdit={() => handleEditTypeService(item)}
+                    handleDelete={() => handleDeleteTypeService(item)}
+                  />
+                </div>
               ))}
+            </div>
           </div>
         </div>
       </div>

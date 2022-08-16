@@ -80,7 +80,7 @@ export default function Address() {
           <div className="row">
             {!loading &&
               data.map((item: AddressModel) => (
-                <div className="col-12 col-md-6 col-lg-4">
+                <div key={item._id} className="col-12 col-md-6 col-lg-4">
                   <ItemList
                     key={item._id}
                     address={{

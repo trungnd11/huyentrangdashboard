@@ -8,24 +8,19 @@ import {
 import Card from "../../components/card/Card";
 import { getBannerStore } from "../../stores/banner/bannerSelector";
 import ModalCommom from "../../components/modal/ModalCommom";
+import { BannerModel } from "../../model/BannerModel"
 import Alert, { SweetAlertComfirm } from "../../components/alert/Alert";
 import { deleteBanner } from "../../api/bannerApi";
 import { uploadImageToFireBase } from "../../firebase/uploadImage";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 
-interface BannerType {
-  _id: string;
-  img?: any;
-  title: string;
-  content: string;
-}
 
 export default function Banner() {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch<any>();
   const banners = useSelector(getBannerStore);
   const [status, setStatus] = useState("Create");
-  const [banner, setBanner] = useState<BannerType>({
+  const [banner, setBanner] = useState<BannerModel>({
     img: "",
     title: "",
     content: "",
@@ -63,7 +58,7 @@ export default function Banner() {
     );
   };
 
-  const handleEditBanner = (banners: BannerType) => {
+  const handleEditBanner = (banners: BannerModel) => {
     setStatus("Update");
     const { img, title, content, _id } = banners;
     setBanner({
@@ -123,7 +118,7 @@ export default function Banner() {
       : updateNotImage();
   };
 
-  const handleDeleteBanner = (banner: BannerType) => {
+  const handleDeleteBanner = (banner: BannerModel) => {
     const deleteBanners = async () => {
       try {
         await deleteBanner(banner);
