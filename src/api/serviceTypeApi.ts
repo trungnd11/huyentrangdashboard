@@ -1,6 +1,6 @@
 import axios from "axios";
 import url from "./baseUrl";
-import { TypeServiceModel } from "../model/ServiceTypeModel";
+import { TypeServiceModel } from "../model/TypeServiceModel";
 
 const serviceTypeUrl = `${url}/service-type`;
 
