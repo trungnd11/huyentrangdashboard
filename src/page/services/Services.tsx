@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getServicesByType } from "../../api/servicesApi";
 import { getServiceType } from "../../api/serviceTypeApi";
-import { TypeServiceModel } from "../../model/ServiceTypeModel";
+import { TypeServiceModel } from "../../model/TypeServiceModel";
 import Alert from "../../components/alert/Alert";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";

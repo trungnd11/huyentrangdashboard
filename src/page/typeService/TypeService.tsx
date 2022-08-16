@@ -8,7 +8,7 @@ import {
   deleteServiceType,
   updateServiceType,
 } from "../../api/serviceTypeApi";
-import { TypeServiceModel } from "../../model/ServiceTypeModel";
+import { TypeServiceModel } from "../../model/TypeServiceModel";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ItemList from "../../components/list/ItemList";
 import ModalCommom from "../../components/modal/ModalCommom";
