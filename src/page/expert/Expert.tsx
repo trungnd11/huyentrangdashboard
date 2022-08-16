@@ -4,18 +4,7 @@ import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";
 import ModalCommom from "../../components/modal/ModalCommom";
 import useFetch from "../../customHook/useFetch";
-
-interface ExpertType {
-  _id: string,
-  avatar: string
-  name: string
-  positon: string
-  description: string
-  linkFb: string
-  linkInsta: string
-  linkZalo: string
-  linkMess: string
-}
+import { ExpertModel } from "../../model/ExpertModel";
 
 export default function Expert() {
   const [modalShow, setModalShow] = useState(false);
@@ -23,7 +12,7 @@ export default function Expert() {
   const [image, setImage] = useState<any>();
   const { data, loading } = useFetch(getExperts);
 
-  const handleEditExpert = (expert: ExpertType) => {
+  const handleEditExpert = (expert: ExpertModel) => {
     setStatus("Update");
     setModalShow(true);
   };
@@ -144,7 +133,7 @@ export default function Expert() {
           </div>
           <div className="row">
             {!loading &&
-              data.map((item: ExpertType) => (
+              data.map((item: ExpertModel) => (
                 <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
                   <Card
                     img={item.avatar}
