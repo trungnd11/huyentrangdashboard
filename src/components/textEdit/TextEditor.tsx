@@ -34,7 +34,7 @@ export default function TextEditor() {
   ];
 
   return (
-    <div className="container-fluid mt-5">
+    <div className="container-fluid text-edit px-0 border rounded-2 overflow-hidden">
       <ReactQuill
         onChange={(html: any) => seteditHtml(html)}
         value={editHtml}

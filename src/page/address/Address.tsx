@@ -10,6 +10,13 @@ export default function Address() {
   const [modalShow, setModalShow] = useState(false);
   const [status, setStatus] = useState("Create");
   const { data, loading } = useFetch(getAddress);
+  const [address, setAddress] = useState<AddressModel>({
+    _id: "",
+    apartmentNumber: "",
+    commune: "",
+    conscious: "",
+    district: ""
+  });
 
   const FromAddress = (
     <form className="form-submit">
@@ -21,6 +28,7 @@ export default function Address() {
         <div className="col-12 col-md-10">
           <div className="filebase64-upload">
             <textarea
+              value={address.apartmentNumber}
               className="form-control"
               placeholder="Nhập số nhà, tên đường,.."
             />
@@ -33,6 +41,7 @@ export default function Address() {
         </div>
         <div className="col-12 col-md-10">
           <input
+            value={address.commune}
             type="text"
             className="form-control"
             placeholder="Nhập xã, phường..."
@@ -44,7 +53,11 @@ export default function Address() {
           <label htmlFor="">Quận / huyện</label>
         </div>
         <div className="col-12 col-md-10">
-          <input className="form-control" placeholder="Nhập quận/ huyện..." />
+          <input
+            value={address.conscious}
+            className="form-control"
+            placeholder="Nhập quận/ huyện..."
+          />
         </div>
       </div>
       <div className="row mb-3">
@@ -53,6 +66,7 @@ export default function Address() {
         </div>
         <div className="col-12 col-md-10">
           <input
+            value={address.district}
             className="form-control"
             placeholder="Nhập tỉnh/ thành phố..."
           />
@@ -73,7 +87,7 @@ export default function Address() {
                   setModalShow(true);
                 }}
               >
-                Thêm chuyên gia mới
+                Thêm địa chỉ mới
               </ButtonCreated>
             </div>
           </div>
@@ -92,6 +106,13 @@ export default function Address() {
                     handleEdit={() => {
                       setModalShow(true);
                       setStatus("Update");
+                      setAddress({
+                        _id: item._id,
+                        apartmentNumber: item.apartmentNumber,
+                        commune: item.commune,
+                        conscious: item.conscious,
+                        district: item.district
+                      })
                     }}
                   />
                 </div>
