@@ -14,7 +14,7 @@ export default function Blog() {
           <label htmlFor="">Tiêu để</label>
         </div>
         <div className="col-12 col-md-10">
-          <input type="text" className="form-control" />
+          <input type="text" className="form-control" placeholder="Nhập tiêu đề bài đăng" />
         </div>
       </div>
       <div className="row mt-3">

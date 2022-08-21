@@ -1,12 +1,14 @@
 .text-edit {
-  .ql-toolbar {
-    .ql-snow {
+  .quill  {
+    border-radius: .5rem;
+    border: 1px solid #ccc;
+
+    .ql-toolbar {
+      border: none;
       border-bottom: 1px solid #ccc !important;
     }
-  }
 
-  .ql-container {
-    .ql-snow {
+    .ql-container {
       border: none !important;
     }
   }
