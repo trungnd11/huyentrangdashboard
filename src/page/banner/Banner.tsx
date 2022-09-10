@@ -166,7 +166,10 @@ export default function Banner() {
             <input
               type="file"
               className="form-control"
-              onChange={handleChangeImg}
+              onChange={(e: any) => {
+                console.log(e.target.files[0]);
+                handleChangeImg(e);
+              }}
             />
           </div>
         </div>

@@ -2,6 +2,7 @@ import { FC } from "react";
 import About from "../page/about/About";
 import Address from "../page/address/Address";
 import Banner from "../page/banner/Banner";
+import Blog from "../page/blog/Blog";
 import Experience from "../page/experience/Experience";
 import Expert from "../page/expert/Expert";
 import PhoneNumber from "../page/phone/PhoneNumber";
@@ -55,5 +56,10 @@ export const PageRouters: RoutersType[] = [
     name: "Số điện thoại",
     path: "/phone",
     component: PhoneNumber,
+  },
+  {
+    name: "Blog",
+    path: "/blog",
+    component: Blog,
   },
 ];

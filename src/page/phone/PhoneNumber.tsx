@@ -10,8 +10,43 @@ export default function PhoneNumber() {
   const [modalShow, setModalShow] = useState(false);
   const [status, setStatus] = useState("Create");
   const { data, loading } = useFetch(getPhone);
+  const [phone, setPhone] = useState<PhoneModel>({
+    _id: "",
+    nameUser: "",
+    phoneNumber: 0,
+    position: "",
+  });
 
-  console.log(loading && data);
+  
+
+  const FormPhone = (
+    <div className="form-submit">
+      <div className="row mt-3">
+        <div className="col-12 col-md-2">
+          <label htmlFor="">Số điện thoại</label>
+        </div>
+        <div className="col-12 col-md-10">
+          <input value={phone.phoneNumber} type={"number"} className="form-control" />
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-12 col-md-2">
+          <label htmlFor="">Họ tên</label>
+        </div>
+        <div className="col-12 col-md-10">
+          <input value={phone.nameUser} type={"text"} className="form-control" />
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-12 col-md-2">
+          <label htmlFor="">Chức vụ</label>
+        </div>
+        <div className="col-12 col-md-10">
+          <input value={phone.position} type={"text"} className="form-control" />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -43,6 +78,12 @@ export default function PhoneNumber() {
                     handleEdit={() => {
                       setModalShow(true);
                       setStatus("Update");
+                      setPhone({
+                        _id: item._id,
+                        phoneNumber: item.phoneNumber,
+                        nameUser: item.nameUser,
+                        position: item.position
+                      })
                     }}
                   />
                 </div>
@@ -57,7 +98,7 @@ export default function PhoneNumber() {
         }}
         title={status === "Create" ? "Thêm địa chỉ mới" : "Cập nhật địa chỉ"}
       >
-        {}
+        { FormPhone }
       </ModalCommom>
     </>
   );
