@@ -4,12 +4,13 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import Alert from "../components/alert/Alert";
+import Alert, { RemoveAlert } from "../components/alert/Alert";
 import { storage } from "./index";
 
 export const uploadImageToFireBase = (repo: string, file: any, callback?: any) => {
   const storageRef = ref(storage, `${repo}/${file.name}`);
   const uploadTask = uploadBytesResumable(storageRef, file);
+  Alert("loading", "Đang lưu ảnh, vui lòng chờ...");
   uploadTask.on(
     "state_changed",
     (snapshot) => {},
@@ -18,6 +19,7 @@ export const uploadImageToFireBase = (repo: string, file: any, callback?: any) =
     },
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        RemoveAlert();
         callback(downloadURL);
       });
     }
