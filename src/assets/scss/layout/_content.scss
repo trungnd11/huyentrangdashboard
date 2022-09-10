@@ -10,4 +10,8 @@
   @include Responsive(XS) {
     width: 100%;
   }
+
+  @include Responsive(MD) {
+    width: 100%;
+  }
 }

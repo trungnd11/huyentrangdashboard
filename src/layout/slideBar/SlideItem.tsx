@@ -5,9 +5,10 @@ import { PageRouters } from "../../routers/allRouter";
 import useFetch from "../../customHook/useFetch";
 import { getServiceType } from "../../api/serviceTypeApi";
 
-export default function SlideItem() {
+export default function SlideItem(props: { onHide?: Function }) {
   const [open, setOpen] = useState(false);
   const { loading, data } = useFetch(getServiceType);
+  const { onHide } = props;
 
   return (
     <div className="slide-item">
@@ -21,7 +22,7 @@ export default function SlideItem() {
                 to={router.path}
                 onClick={() => setOpen(false)}
               >
-                <li>{router.name}</li>
+                <li onClick={() => onHide && onHide()}>{router.name}</li>
               </NavLink>
             ) : (
               <div>
@@ -51,7 +52,12 @@ export default function SlideItem() {
                           key={index}
                           to={`services/type-${item._id}`}
                         >
-                          <li className="ms-3">{item.serviceType}</li>
+                          <li
+                            className="ms-3"
+                            onClick={() => onHide && onHide()}
+                          >
+                            {item.serviceType}
+                          </li>
                         </NavLink>
                       ))}
                   </ul>

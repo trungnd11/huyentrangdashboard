@@ -11,7 +11,7 @@ import ModalCommom from "../../components/modal/ModalCommom";
 import { BannerModel } from "../../model/BannerModel"
 import Alert, { SweetAlertComfirm } from "../../components/alert/Alert";
 import { deleteBanner } from "../../api/bannerApi";
-import { uploadImageToFireBase } from "../../firebase/uploadImage";
+import { deleteImageToFireBase, uploadImageToFireBase } from "../../firebase/uploadImage";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 
 
@@ -29,6 +29,10 @@ export default function Banner() {
   const [image, setImage] = useState<any>();
 
   const handleCreateBanner = () => {
+    if (!image) {
+      Alert("error", "Vui lòng chọn ảnh");
+      throw new Error("inValid");
+    }
     const saveToDataBase = (imgUrl: string) => {
       try {
         dispatch(
@@ -123,6 +127,7 @@ export default function Banner() {
       try {
         await deleteBanner(banner);
         Alert("error", "Xoá ảnh thành công");
+        deleteImageToFireBase(banner.img);
         dispatch(fetBanners());
       } catch (error) {
         Alert("error", "Lỗi hệ thống");

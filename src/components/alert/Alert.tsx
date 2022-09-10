@@ -2,7 +2,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 
-export default function Alert(status: string, title: string) {
+export default function Alert(
+  status: "success" | "error" | "info" | "loading",
+  title: string
+) {
   return (
     <div>
       {!status
@@ -11,10 +14,14 @@ export default function Alert(status: string, title: string) {
         ? toast.success(title)
         : status === "error"
         ? toast.error(title)
-        : status === "info" && toast.info(title)}
+        : status === "info"
+        ? toast.info(title)
+        : status === "loading" && toast.loading(title)}
     </div>
   );
 }
+
+export const RemoveAlert = () => toast.dismiss();
 
 export const SweetAlertComfirm = (
   alertMessage?: string,

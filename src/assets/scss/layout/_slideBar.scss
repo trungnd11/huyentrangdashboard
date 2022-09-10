@@ -10,6 +10,10 @@
   @include Responsive(XS) {
     display: none;
   }
+
+  @include Responsive(MD) {
+    display: none;
+  }
 }
 
 .slide-bar::-webkit-scrollbar-track
