@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import Input from "../../../components/input/Input";
 import logo from "../../../statics/logo/logo.png";
+import { loginUser } from "../../../stores/login/login";
 export default function Login() {
-
+  const dispatch = useDispatch<any>();
   const formValidation = useFormik({
     initialValues: {
       username: "",
@@ -14,7 +16,7 @@ export default function Login() {
       password: Yup.string().required("Mật khẩu không được để trống").min(6, "Mật khẩu ít nhất 6 kí tự")
     }),
     onSubmit: (value) => {
-      console.log(value);
+       dispatch(loginUser(value));
     }
   })
 
@@ -57,7 +59,7 @@ export default function Login() {
             <label htmlFor="">Mật khẩu</label>
             <Input
               name="password"
-              type="text"
+              type="password"
               className="form-control mt-1"
               placeholder="Nhập mật khẩu..."
               value={formValidation.values.password}
