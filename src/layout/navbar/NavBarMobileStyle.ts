@@ -1,5 +1,8 @@
-import styled from "styled-components";
-import { Gray, MainColor } from "../../assets/styled-components/Variables";
+import styled, { keyframes } from "styled-components";
+import { fadeInLeft, zoomIn, rotateIn, flip } from "react-animations";
+import { MainColor } from "../../assets/styled-components/Variables";
+
+const showNavBar = keyframes`${zoomIn}`;
 
 export const NavBarMobileStyle = styled.div`
   position: fixed;
@@ -13,6 +16,7 @@ export const NavBarMobileStyle = styled.div`
     rgba(5, 8, 114, 1) 0%,
     rgba(7, 3, 53, 1) 97.5%
   );
+  animation: .6s ${showNavBar};
 
   .navbar-mobile {
     width: 100%;
@@ -65,4 +69,36 @@ export const NavBarMobileStyle = styled.div`
     );
     padding: 0 .7rem;
   }
+`;
+
+const showMenuUser = keyframes`${fadeInLeft}`;
+
+export const DivListMenu = styled.div`
+  animation: 0.6s ${showMenuUser};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .author-code {
+    margin-bottom: 5rem;
+    a {
+      color: ${MainColor};
+    }
+  }
+`;
+
+const showBtnMenu = keyframes`${rotateIn}`;
+
+export const BtnIcon = styled.i`
+  animation: .6s ${showBtnMenu};
+`
+
+export const DivAvatar = styled.img`
+  animation: 0.6s ${showBtnMenu};
+`;
+
+const showBrandName = keyframes`${flip}`
+
+export const BrandName = styled.h5`
+  animation: 2s 1s ${showBrandName};
 `;
