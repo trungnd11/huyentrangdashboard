@@ -6,7 +6,10 @@ export default function AuthRouter(props: { children: JSX.Element }) {
   const { children } = props;
   const userJson = getCookie(Author.USER);
 
-  return userJson && JSON.parse(userJson).role === "admin" ? (
+  return userJson &&
+    JSON.parse(userJson).roles.find(
+      (role: string) => role === Author.ROLE_ADMIN
+    ) ? (
     children
   ) : (
     <Navigate to="/home" />

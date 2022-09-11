@@ -42,12 +42,21 @@ export const NavBarMobileStyle = styled.div`
       }
     }
     .auth-avatar {
+      position: relative;
       flex-basis: 10%;
 
       img {
         width: 100%;
         border-radius: 50%;
         border: 1px solid ${MainColor};
+      }
+
+      .info-menu {
+        position: absolute;
+        right: 0;
+        background: #000;
+        width: max-content;
+        height: fit-content;
       }
     }
   }

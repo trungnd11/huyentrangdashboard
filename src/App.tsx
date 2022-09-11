@@ -16,7 +16,7 @@ import Routers from "./routers/Routers";
 import { getLoginStore, login, logout } from "./stores/login/login";
 
 function App() {
-  const { isAuthoration } = useSelector(getLoginStore);
+  const { isAuthorization } = useSelector(getLoginStore);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const user = getCookie(Author.USER);
@@ -24,11 +24,11 @@ function App() {
 
   useEffect(() => {
     user ? dispatch(login(JSON.parse(user))) : dispatch(logout(Author.USER));
-  }, [pathname]);
+  }, [dispatch, pathname, user]);
 
   useEffect(() => {
-    isAuthoration ? <Navigate to="/" /> : <Navigate to="/home" />
-  }, [isAuthoration]);
+    isAuthorization ? <Navigate to="/" /> : <Navigate to="/home" />
+  }, [isAuthorization]);
 
   return (
     <div className="App">
