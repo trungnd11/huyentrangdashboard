@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import logo from "../../statics/logo/logo.png";
 import Login from "./login/Login";
 export default function Home() {
@@ -8,6 +8,10 @@ export default function Home() {
   const handleLogin = useCallback(() => {
     setIsLogin(true);
   }, []);
+
+  useEffect(() => {
+    document.title = "Huyen Trang - Admin"
+  }, [])
 
   return (
     <div className="home-container">
