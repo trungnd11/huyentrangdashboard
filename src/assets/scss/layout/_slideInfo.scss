@@ -1,6 +1,8 @@
 .slide-info {
   width: 100%;
   text-align: center;
+  position: relative;
+  cursor: pointer;
   .avatar {
     position: relative;
     border-radius: 50%;
@@ -47,5 +49,13 @@
       font-weight: 600;
       color: $main-color;
     }
+  }
+
+  .info-menu {
+    position: absolute;
+    height: fit-content;
+    right: 0;
+    left: 0;
+    z-index: 1;
   }
 }

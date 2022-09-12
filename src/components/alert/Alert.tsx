@@ -27,7 +27,11 @@ export const SweetAlertComfirm = (
   alertMessage?: string,
   message?: string,
   callback?: Function,
-  callbackCancel?: Function
+  callbackCancel?: Function,
+  option?: {
+    labelSuccess?: string;
+    labelError?: string;
+  }
 ) => {
   Swal.fire({
     title: alertMessage,
@@ -36,8 +40,8 @@ export const SweetAlertComfirm = (
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Xoá ngay",
-    cancelButtonText: "Không xoá",
+    confirmButtonText: option?.labelSuccess || "Đồng ý",
+    cancelButtonText: option?.labelError || "Huỷ bỏ",
   }).then((result) => {
     if (result.isConfirmed) {
       callback && callback();
