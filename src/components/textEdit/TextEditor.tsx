@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ReactQuill from "react-quill";
 
-export default function TextEditor() {
+export default function TextEditor(props: { onEdit?: Function }) {
+  const { onEdit } = props;
   const [editHtml, seteditHtml] = useState("");
 
   const modules = {
@@ -33,10 +34,18 @@ export default function TextEditor() {
     "image",
   ];
 
+  const handleChangeText = useCallback(
+    (html: string) => {
+      seteditHtml(pre => html);
+      onEdit && onEdit(editHtml);
+    },
+    [editHtml, onEdit],
+  )
+
   return (
     <div className="container-fluid text-edit px-0">
       <ReactQuill
-        onChange={(html: any) => seteditHtml(html)}
+        onChange={handleChangeText}
         value={editHtml}
         modules={modules}
         formats={formats}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ModalCommom from "../../components/modal/ModalCommom";
 import TextEditor from "../../components/textEdit/TextEditor";
@@ -6,6 +6,13 @@ import TextEditor from "../../components/textEdit/TextEditor";
 export default function Blog() {
   const [modalShow, setModalShow] = useState(false);
   const [status, setStatus] = useState("Create");
+
+  const handleChangeTextEdit = useCallback(
+    (text: string) => {
+      console.log(text);
+    },
+    [],
+  )
 
   const FormBlog = (
     <div className="form-blog">
@@ -22,7 +29,7 @@ export default function Blog() {
           <label htmlFor="">Nội dung</label>
         </div>
         <div className="col-12 col-md-10">
-          <TextEditor />
+          <TextEditor onEdit={(text: string) => handleChangeTextEdit(text)} />
         </div>
       </div>
     </div>
