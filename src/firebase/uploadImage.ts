@@ -30,7 +30,7 @@ export const deleteImageToFireBase = (url: string | undefined | null | any) => {
   const desertRef = ref(storage, url);
   deleteObject(desertRef)
     .then(() => {
-      
+      console.log("OK")
     })
     .catch((error) => {
       RemoveAlert();

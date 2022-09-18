@@ -92,8 +92,8 @@ export default function Expert() {
         });
         RemoveAlert();
         Alert("success", "Cập nhật thành công");
+        deleteImageToFireBase(validate.values.avatar.toString());
         setReset((pre) => !pre);
-        deleteImageToFireBase(value.avatar);
       } catch (error: any) {
         RemoveAlert();
         Alert("error", error.response.statusText);
