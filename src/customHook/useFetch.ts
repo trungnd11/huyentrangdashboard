@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function useFetch(actionApi: any) {
   const [data, setData] = useState<any[]>([]);
+  const [item, setItem] = useState<any>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [reset, setReset] = useState(false);
@@ -12,6 +13,7 @@ export default function useFetch(actionApi: any) {
       setLoading(true);
       const response = await actionApi();
       setData(response.data);
+      setItem(response.data);
     } catch (err) {
       setError(err);
     } finally {
@@ -27,5 +29,5 @@ export default function useFetch(actionApi: any) {
     fetApi();
   }, [reset])
 
-  return { data, error, loading, setReset };
+  return { data, error, loading, setReset, item };
 }

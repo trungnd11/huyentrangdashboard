@@ -34,7 +34,6 @@ export default function Expert() {
   const handleChangeImg = (e: any) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
-      validate.setFieldValue("avatar", "");
     }
   };
 
@@ -158,15 +157,13 @@ export default function Expert() {
         </div>
         <div className="col-12 col-md-10">
           <div className="filebase64-upload">
-            {image && (
+            {image ? (
               <div className="img-update mb-3">
-                <img
-                  src={
-                    validate.values.avatar ||
-                    (image && URL.createObjectURL(image))
-                  }
-                  alt={``}
-                />
+                <img src={image && URL.createObjectURL(image)} alt={``} />
+              </div>
+            ) : (
+              <div className="img-update mb-3">
+                <img src={validate.values.avatar} alt={``} />
               </div>
             )}
             <input

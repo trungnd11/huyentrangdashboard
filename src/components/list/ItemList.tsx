@@ -4,6 +4,7 @@ export default function ItemList(prop: {
   img?: string;
   title?: string;
   content?: string;
+  description?: string | any[];
   address?: {
     _id?: string;
     apartmentNumber: string;
@@ -19,7 +20,7 @@ export default function ItemList(prop: {
   handleEdit?: any;
   handleDelete?: any;
 }) {
-  const { img, title, content, address, phone, handleEdit, handleDelete } = prop;
+  const { img, title, content, address, phone, description, handleEdit, handleDelete } = prop;
   return (
     <div className="item-list shadow mt-3 h-100">
       <div className="row h-100">
@@ -54,6 +55,11 @@ export default function ItemList(prop: {
                 <>
                   <h4>{title}</h4>
                   <p>{content}</p>
+                  {description && Array.isArray(description)
+                    ? description.map((item: string, index: number) => (
+                        <p key={index}>- {item}</p>
+                      ))
+                    : description && <p> - {description}</p>}
                 </>
               )}
             </div>
