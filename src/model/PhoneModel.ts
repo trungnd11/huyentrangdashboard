@@ -1,5 +1,5 @@
 export interface PhoneModel {
-  _id: string;
+  _id?: string;
   phoneNumber: number;
   nameUser: string;
   position: string;

@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { useCallback, useEffect, useState } from "react";
 import { getBlogs } from "../../api/blogsApi";
 import Alert from "../../components/alert/Alert";

@@ -44,6 +44,10 @@ const banners = createSlice({
     builder.addCase(createBanners.fulfilled, (state, action) => {
       state.loading = false;
       state.banners = [ ...state.banners, action.payload ];
+    }).addCase(createBanners.pending, (state, action) => {
+      
+    }).addCase(createBanners.rejected, (state, action) => {
+
     });
     builder.addCase(updateBanners.fulfilled, (state, action) => {
       const filterBanner = state.banners.filter(item => item._id !== action.payload._id);

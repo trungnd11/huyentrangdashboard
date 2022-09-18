@@ -4,7 +4,7 @@ export default function Input(props: {
   name?: string;
   id?: string;
   value?: any;
-  type?: "text" | "password" | "file" | "radio" | "checkbox";
+  type?: "text" | "password" | "file" | "radio" | "checkbox" | "number";
   isValid?: boolean;
   placeholder?: string;
   textarea?: boolean;

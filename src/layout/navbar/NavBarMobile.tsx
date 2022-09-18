@@ -5,6 +5,7 @@ import {
   BtnIcon,
   DivAvatar,
   DivListMenu,
+  ListMenuInfo,
   NavBarMobileStyle,
 } from "./NavBarMobileStyle";
 import SlideItem from "../slideBar/SlideItem";
@@ -52,12 +53,12 @@ export default function NavBarMobile() {
           )}
         </div>
         <div className="brand-name">
-          <BrandName>Huyen Trang Tran</BrandName>
+          <BrandName>{username || "Huyen Trang Tran"}</BrandName>
         </div>
         <div className="auth-avatar">
           <DivAvatar src={avatar || user} alt="" onClick={handleShowInfoMenu} />
           {showMenuInfo && (
-            <div className="info-menu">
+            <ListMenuInfo className="info-menu">
               <ul className="list-group">
                 <li className="list-group-item active" aria-current="true">
                   {username}
@@ -73,12 +74,15 @@ export default function NavBarMobile() {
                 <li className="list-group-item">
                   <i className="fa-solid fa-bell pe-1"></i>Thông báo
                 </li>
-                <li className="list-group-item text-danger" onClick={handleLogout}>
+                <li
+                  className="list-group-item text-danger"
+                  onClick={handleLogout}
+                >
                   <i className="fa-solid fa-right-to-bracket pe-1"></i>
                   Đăng xuất
                 </li>
               </ul>
-            </div>
+            </ListMenuInfo>
           )}
         </div>
       </div>

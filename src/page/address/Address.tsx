@@ -1,21 +1,89 @@
 import { useState } from "react";
-import { getAddress } from "../../api/addressApi";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { createAddress, deleteAddress, getAddress, updateAddress } from "../../api/addressApi";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import ItemList from "../../components/list/ItemList";
 import ModalCommom from "../../components/modal/ModalCommom";
 import useFetch from "../../customHook/useFetch";
 import { AddressModel } from "../../model/AddressModel";
+import Input from "../../components/input/Input";
+import Alert, { RemoveAlert, SweetAlertComfirm } from "../../components/alert/Alert";
 
 export default function Address() {
   const [modalShow, setModalShow] = useState(false);
   const [status, setStatus] = useState("Create");
-  const { data, loading } = useFetch(getAddress);
-  const [address, setAddress] = useState<AddressModel>({
-    _id: "",
-    apartmentNumber: "",
-    commune: "",
-    conscious: "",
-    district: ""
+  const { data, loading, setReset } = useFetch(getAddress);
+
+  const fetCreateAddress = async (value: AddressModel, resetFomr: any) => {
+    try {
+      await createAddress({
+        apartmentNumber: value.apartmentNumber,
+        commune: value.commune,
+        conscious: value.conscious,
+        district: value.district,
+      });
+      RemoveAlert();
+      Alert("success", "Thêm mới thành công");
+      setReset((pre) => !pre);
+    } catch (error: any) {
+      RemoveAlert();
+      Alert("error", error.response.statusText);
+    }
+  };
+
+  const fetUpdateAddress = async (value: AddressModel, resetFomr: any) => {
+    try {
+      await updateAddress(value);
+      RemoveAlert();
+      Alert("success", "Cập nhật thành công");
+      setReset(pre => !pre);
+    } catch (error: any) {
+      RemoveAlert();
+      Alert("error", error.response.statusText);
+    }
+  };
+
+  const handleSubmit = (value: AddressModel, reset: any) => {
+    Alert("loading", "Vui lòng chờ");
+    status === "Create" ? fetCreateAddress(value, reset) : fetUpdateAddress(value, reset);
+  };
+
+  const handleDeleteAddress = (id: string | undefined) => {
+    const fetDeleteAddress = async () => {
+      Alert("loading", "Vui lòng chờ");
+      try {
+        id && await deleteAddress(id);
+        RemoveAlert();
+        Alert("success", "Đã xoá thành công");
+        setReset((pre) => !pre);
+      } catch (error: any) {
+        RemoveAlert();
+        Alert("error", error.response.statusText);
+      }
+    };
+
+    SweetAlertComfirm("Xác nhận", "Xoá vĩnh viễn địa chỉ này", () => fetDeleteAddress());
+  }
+
+  const validate = useFormik({
+    initialValues: {
+      _id: "",
+      apartmentNumber: "",
+      commune: "",
+      conscious: "",
+      district: "",
+    },
+    validationSchema: Yup.object({
+      apartmentNumber: Yup.string().required(),
+      commune: Yup.string().required(),
+      conscious: Yup.string().required(),
+      district: Yup.string().required(),
+    }),
+    onSubmit: (value, resetForm) => {
+      setModalShow(false);
+      handleSubmit(value, resetForm);
+    },
   });
 
   const FromAddress = (
@@ -27,10 +95,18 @@ export default function Address() {
         </div>
         <div className="col-12 col-md-10">
           <div className="filebase64-upload">
-            <textarea
-              value={address.apartmentNumber}
+            <Input
+              textarea
+              name="apartmentNumber"
+              value={validate.values.apartmentNumber}
               className="form-control"
               placeholder="Nhập số nhà, tên đường,.."
+              onChange={validate.handleChange}
+              isValid={
+                validate.errors.apartmentNumber && validate.touched.apartmentNumber
+                  ? true
+                  : false
+              }
             />
           </div>
         </div>
@@ -40,11 +116,18 @@ export default function Address() {
           <label htmlFor="">Xã/ phường</label>
         </div>
         <div className="col-12 col-md-10">
-          <input
-            value={address.commune}
+          <Input
+            name="commune"
+            value={validate.values.commune}
             type="text"
             className="form-control"
             placeholder="Nhập xã, phường..."
+            onChange={validate.handleChange}
+            isValid={
+              validate.errors.commune && validate.touched.commune
+                ? true
+                : false
+            }
           />
         </div>
       </div>
@@ -53,10 +136,17 @@ export default function Address() {
           <label htmlFor="">Quận / huyện</label>
         </div>
         <div className="col-12 col-md-10">
-          <input
-            value={address.conscious}
+          <Input
+            name="conscious"
+            value={validate.values.conscious}
             className="form-control"
             placeholder="Nhập quận/ huyện..."
+            onChange={validate.handleChange}
+            isValid={
+              validate.errors.conscious && validate.touched.conscious
+                ? true
+                : false
+            }
           />
         </div>
       </div>
@@ -65,10 +155,17 @@ export default function Address() {
           <label htmlFor="">Tỉnh / thành phố</label>
         </div>
         <div className="col-12 col-md-10">
-          <input
-            value={address.district}
+          <Input
+            name="district"
+            value={validate.values.district}
             className="form-control"
             placeholder="Nhập tỉnh/ thành phố..."
+            onChange={validate.handleChange}
+            isValid={
+              validate.errors.district && validate.touched.district
+                ? true
+                : false
+            }
           />
         </div>
       </div>
@@ -93,8 +190,13 @@ export default function Address() {
           </div>
           <div className="row">
             {!loading &&
-              data.map((item: AddressModel) => (
-                <div key={item._id} className="col-12 col-md-6 col-lg-4">
+              data.map((item: AddressModel, index: number) => (
+                <div
+                  key={item._id}
+                  className={`col-12 col-md-6 col-lg-4 ${
+                    index !== 0 && "mt-3 mt-lg-0"
+                  }`}
+                >
                   <ItemList
                     key={item._id}
                     address={{
@@ -106,14 +208,16 @@ export default function Address() {
                     handleEdit={() => {
                       setModalShow(true);
                       setStatus("Update");
-                      setAddress({
-                        _id: item._id,
-                        apartmentNumber: item.apartmentNumber,
-                        commune: item.commune,
-                        conscious: item.conscious,
-                        district: item.district
-                      })
+                      validate.setFieldValue(
+                        "apartmentNumber",
+                        item.apartmentNumber
+                      );
+                      validate.setFieldValue("commune", item.commune);
+                      validate.setFieldValue("conscious", item.conscious);
+                      validate.setFieldValue("district", item.district);
+                      validate.setFieldValue("_id", item._id);
                     }}
+                    handleDelete={() => handleDeleteAddress(item._id)}
                   />
                 </div>
               ))}
@@ -124,8 +228,11 @@ export default function Address() {
         show={modalShow}
         onHide={() => {
           setModalShow(false);
+          validate.resetForm();
         }}
         title={status === "Create" ? "Thêm địa chỉ mới" : "Cập nhật địa chỉ"}
+        type="submit"
+        validation={validate.handleSubmit}
       >
         {FromAddress}
       </ModalCommom>

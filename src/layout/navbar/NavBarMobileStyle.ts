@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { fadeInLeft, zoomIn, rotateIn, flip } from "react-animations";
+import { fadeInLeft, fadeInRight, zoomIn, rotateIn, flip } from "react-animations";
 import { MainColor } from "../../assets/styled-components/Variables";
 
 const showNavBar = keyframes`${zoomIn}`;
@@ -16,7 +16,7 @@ export const NavBarMobileStyle = styled.div`
     rgba(5, 8, 114, 1) 0%,
     rgba(7, 3, 53, 1) 97.5%
   );
-  animation: .6s ${showNavBar};
+  animation: 0.6s ${showNavBar};
 
   .navbar-mobile {
     width: 100%;
@@ -59,13 +59,19 @@ export const NavBarMobileStyle = styled.div`
         height: fit-content;
       }
     }
+
+    @media screen and (min-width: 767px) and (max-width: 1023px) {
+      img {
+        width: 65% !important;
+      }
+    }
   }
 
   .overlay {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
   }
   .list-menu {
     width: 70%;
@@ -76,7 +82,11 @@ export const NavBarMobileStyle = styled.div`
       rgba(5, 8, 114, 1) 0%,
       rgba(7, 3, 53, 1) 97.5%
     );
-    padding: 0 .7rem;
+    padding: 0 0.7rem;
+
+    @media screen and (min-width: 767px) and (max-width: 1023px) {
+      width: 40% !important;
+    }
   }
 `;
 
@@ -110,4 +120,10 @@ const showBrandName = keyframes`${flip}`
 
 export const BrandName = styled.h5`
   animation: 2s 1s ${showBrandName};
+`;
+
+const showListMenuInfo = keyframes`${fadeInRight}`;
+
+export const ListMenuInfo = styled.div`
+  animation: 0.6s ${showListMenuInfo};
 `;

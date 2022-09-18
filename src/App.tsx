@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import AxiosConfig from "./axiosConfig/AxiosConfig";
 import { getCookie } from "./components/function/function";
 import { Author } from "./enum/Enum";
 import Content from "./layout/content/Content";
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <div className="App">
+      { <AxiosConfig /> }
       <Routes>
         <Route
           path="/home"

@@ -21,8 +21,8 @@ export default function ItemList(prop: {
 }) {
   const { img, title, content, address, phone, handleEdit, handleDelete } = prop;
   return (
-    <div className="item-list shadow mt-3">
-      <div className="row">
+    <div className="item-list shadow mt-3 h-100">
+      <div className="row h-100">
         {img && (
           <div className="col-12 col-md-3">
             <div className="img">

@@ -9,7 +9,9 @@ export default function Footer() {
             {new Date().getFullYear()} © <a href="#">Huyen Trang Tran</a>
           </div>
           <div className="col-12 col-md-6">
-            Design & Develop by A <i className="fa-solid fa-heart" />
+            Design & Develop by <i className="fa-solid fa-heart me-1" />
+            <a href="https://nguyendinhtrung.herokuapp.com/">A</a>{" "}
+            <i className="fa-solid fa-heart" />
           </div>
         </div>
       </div>

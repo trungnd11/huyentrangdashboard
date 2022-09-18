@@ -12,7 +12,7 @@ export default function ModalCommom(props: {
   handleClick?: any;
   cancelBtnTex?: string;
   submitBtnText?: string;
-  validation?: any;
+  validation?: Function;
 }) {
   const { handleClick, ...rest } = props;
   return (
@@ -31,7 +31,7 @@ export default function ModalCommom(props: {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            rest.validation();
+            rest.validation && rest.validation();
             return false;
           }}
         >
