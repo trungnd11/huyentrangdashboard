@@ -1,152 +1,107 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getServicesByType } from "../../api/servicesApi";
-import { getServiceType } from "../../api/serviceTypeApi";
-import { TypeServiceModel } from "../../model/TypeServiceModel";
+import { createService, getServicesByType, updateService } from "../../api/servicesApi";
 import Alert from "../../components/alert/Alert";
 import ButtonCreated from "../../components/buttoncreate/ButtonCreated";
 import Card from "../../components/card/Card";
 import ModalCommom from "../../components/modal/ModalCommom";
-import useFetch from "../../customHook/useFetch";
+import { AlertMessage, AlertType, TypeModal } from "../../enum/Enum";
+import { uploadImageToFireBase } from "../../firebase/uploadImage";
 import { ServiceModel } from "../../model/ServiceModel";
-
+import FormService from "./FormService";
+import { validationForm } from "./Validate";
 
 export default function Services() {
   const { type } = useParams();
   const [modalShow, setModalShow] = useState(false);
-  const [status, setStatus] = useState("Create");
+  const [status, setStatus] = useState(TypeModal.CREATE);
   const [services, setServices] = useState({
     loading: true,
-    data: [{
-      description: "",
-      name: "",
-      serviceType: "",
-      image: "",
-      _id: "",
-    }],
-    error: ""
+    data: [
+      {
+        description: "",
+        name: "",
+        serviceType: "",
+        image: "",
+        _id: "",
+      },
+    ],
+    error: "",
   });
-  const { loading, data } = useFetch(getServiceType);
   const [service, setService] = useState<ServiceModel>();
-  const [image, setImage] = useState<any>();
+  const refForm = useRef<{ image: File }>();
+  const [reset, setReset] = useState(false);
 
   const getServicesByTypes = async (typeService: { serviceType?: string }) => {
     try {
       const res = await getServicesByType(typeService);
-      setServices(pre => ({
+      setServices((pre) => ({
         ...pre,
         loading: false,
-        data: res.data
+        data: res.data,
       }));
-
     } catch (error) {
-      Alert("error", "Lỗi hệ thống");
+      Alert(AlertType.ERROR, AlertMessage.ERROR);
+    }
+  };
+
+  const saveServiceToDataBase = async (service: ServiceModel, url: string, type: string) => {
+    if (type === TypeModal.CREATE) {
+      try {
+        await createService({ ...service, image: url });
+        Alert(AlertType.SUCCESS, AlertMessage.SUCCESS_CREATE);
+        setModalShow(false);
+        setReset((pre) => !pre);
+      } catch (error) {
+        setModalShow(false);
+        Alert(AlertType.ERROR, AlertMessage.ERROR);
+      }
+    }
+    else if (type === TypeModal.UPDATE) {
+      try {
+        await updateService({ ...service, image: url });
+        Alert(AlertType.SUCCESS, AlertMessage.SUCCESS_UPDATE);
+        setModalShow(false);
+        setReset((pre) => !pre);
+      } catch (error) {
+        setModalShow(false);
+        Alert(AlertType.ERROR, AlertMessage.ERROR);
+      }
     }
   };
 
   const handleCreateService = () => {
-    console.log(service);
-  }
-
-  const handleUpdateService = () => {
-    console.log("Update");
+    if (validationForm(service, refForm.current?.image)) {
+      uploadImageToFireBase(
+        `services-${type}`,
+        refForm.current?.image,
+        (url: string) => {
+          service && saveServiceToDataBase(service, url, TypeModal.CREATE);
+        }
+      );
+    }
   };
 
-  const FromService = (
-    <form className="form-service">
-      <div className="row mb-3">
-        <div className="col-12 col-md-2">
-          <label htmlFor="">Chọn loại dịch vụ</label>
-        </div>
-        <div className="col-12 col-md-10">
-          <select
-            className="form-control"
-            name=""
-            id=""
-            onChange={(e: any) =>
-              setService((pre: any) => ({
-                ...pre,
-                serviceType: e.target.value,
-              }))
-            }
-          >
-            <option value="">Chọn loại dịch vụ</option>
-            {!loading &&
-              data.map((item: TypeServiceModel) => (
-                <option key={item._id} value={item._id}>
-                  {item.serviceType}
-                </option>
-              ))}
-          </select>
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-12 col-md-2">
-          <label htmlFor="">Chọn ảnh</label>
-        </div>
-        <div className="col-12 col-md-10">
-          {service?.image || image ? (
-            <div className="img-update mb-3">
-              <img
-                src={(image && URL.createObjectURL(image)) || service?.image}
-                alt={service?.name}
-              />
-            </div>
-          ) : null}
-          <input
-            type="file"
-            className="form-control"
-            onChange={(e: any) => {
-              if (e.target.files[0]) {
-                setImage(e.target.files[0]);
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-12 col-md-2">
-          <label htmlFor="">Tên dịch vụ</label>
-        </div>
-        <div className="col-12 col-md-10">
-          <input
-            type="text"
-            className="form-control"
-            value={service?.name}
-            onChange={(e: any) =>
-              setService((pre: any) => ({
-                ...pre,
-                name: e.target.value,
-              }))
-            }
-          />
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-12 col-md-2">
-          <label htmlFor="">Mô tả</label>
-        </div>
-        <div className="col-12 col-md-10">
-          <textarea
-            className="form-control"
-            value={service?.description}
-            onChange={(e: any) =>
-              setService((pre: any) => ({
-                ...pre,
-                description: e.target.value,
-              }))
-            }
-          />
-        </div>
-      </div>
-    </form>
-  );
+  const handleUpdateService = () => {
+    if (service?.image && validationForm(service, service?.image)) {
+      service &&
+        saveServiceToDataBase(service, service.image, TypeModal.UPDATE);
+    } else if (validationForm(service, refForm.current?.image)) {
+      uploadImageToFireBase(
+        `services-${type}`,
+        refForm.current?.image,
+        (url: string) => {
+          service && saveServiceToDataBase(service, url, TypeModal.UPDATE);
+        }
+      );
+    }
+  };
 
   useEffect(() => {
     document.title = `Dịch vụ - ${services.data[0].serviceType}`;
     getServicesByTypes({ serviceType: type });
-  }, [type])
+  }, [type, reset]);
 
   return (
     <>
@@ -156,7 +111,7 @@ export default function Services() {
             <div className="col-12 col-md-6 col-lg-3">
               <ButtonCreated
                 handleClick={() => {
-                  setStatus("Create");
+                  setStatus(TypeModal.CREATE);
                   setModalShow(true);
                 }}
               >
@@ -173,7 +128,7 @@ export default function Services() {
                     title={item.name}
                     content={item.description}
                     handleEdit={() => {
-                      setStatus("Update");
+                      setStatus(TypeModal.UPDATE);
                       setService(item);
                       setModalShow(true);
                     }}
@@ -196,10 +151,16 @@ export default function Services() {
             _id: "",
           });
         }}
-        title={status === "Create" ? "Thêm dịch vụ mới" : "Cập nhật dịch vụ"}
-        handleClick={status === "Create" ? handleCreateService : handleUpdateService}
+        title={
+          status === TypeModal.CREATE ? "Thêm dịch vụ mới" : "Cập nhật dịch vụ"
+        }
+        handleClick={
+          status === TypeModal.CREATE
+            ? handleCreateService
+            : handleUpdateService
+        }
       >
-        {FromService}
+        <FormService service={service} setService={setService} ref={refForm} />
       </ModalCommom>
     </>
   );

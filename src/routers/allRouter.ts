@@ -15,7 +15,7 @@ interface RoutersType {
   children?: boolean
 }
 
-export const PageRouters: RoutersType[] = [
+export const PageRouters: Array<RoutersType> = [
   {
     name: "Ảnh Banner",
     path: "/banner",
