@@ -3,5 +3,5 @@ export interface ServiceModel {
   name: string;
   serviceType: string;
   image?: string;
-  _id?: string;
+  id?: string;
 }

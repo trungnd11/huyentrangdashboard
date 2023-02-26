@@ -50,7 +50,7 @@ export default function SlideItem(props: { onHide?: Function }) {
                         <NavLink
                           className="item"
                           key={index}
-                          to={`services/type-${item._id}`}
+                          to={`services/type-${item.id}`}
                         >
                           <li
                             className="ms-3"

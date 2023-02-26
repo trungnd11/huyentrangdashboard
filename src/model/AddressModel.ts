@@ -1,5 +1,5 @@
 export interface AddressModel {
-  _id?: string;
+  id?: string;
   apartmentNumber: string;
   commune: string;
   district: string;

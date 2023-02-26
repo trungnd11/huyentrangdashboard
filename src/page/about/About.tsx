@@ -80,7 +80,7 @@ export default function About() {
 
   const validate = useFormik({
     initialValues: {
-      _id: "",
+      id: "",
       avatar: "",
       title: "",
       description1: "",
@@ -277,7 +277,7 @@ export default function About() {
                   handleEdit={() => {
                     setModalShow(true);
                     setStatus("Update");
-                    validate.setFieldValue("_id", item?._id);
+                    validate.setFieldValue("id", item?.id);
                     validate.setFieldValue("avatar", item?.avatar);
                     validate.setFieldValue("title", item?.title);
                     validate.setFieldValue("description1", item?.description1);

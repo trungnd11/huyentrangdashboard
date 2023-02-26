@@ -1,5 +1,5 @@
 interface BannersType  {
-  _id: string,
+  id: string,
   img: string,
   content: string,
   title: string

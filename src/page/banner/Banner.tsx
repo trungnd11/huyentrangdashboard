@@ -24,7 +24,7 @@ export default function Banner() {
     img: "",
     title: "",
     content: "",
-    _id: "",
+    id: "",
   });
   const [image, setImage] = useState<any>();
 
@@ -47,7 +47,7 @@ export default function Banner() {
           img: "",
           title: "",
           content: "",
-          _id: "",
+          id: "",
         });
         setModalShow(false);
         Alert("success", "Thêm mới ảnh thành công");
@@ -64,12 +64,12 @@ export default function Banner() {
 
   const handleEditBanner = (banners: BannerModel) => {
     setStatus("Update");
-    const { img, title, content, _id } = banners;
+    const { img, title, content, id } = banners;
     setBanner({
       img,
       title,
       content,
-      _id,
+      id,
     });
     setModalShow(true);
   };
@@ -88,7 +88,7 @@ export default function Banner() {
           img: "",
           title: "",
           content: "",
-          _id: "",
+          id: "",
         });
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
@@ -105,7 +105,7 @@ export default function Banner() {
           img: "",
           title: "",
           content: "",
-          _id: "",
+          id: "",
         });
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
@@ -228,7 +228,7 @@ export default function Banner() {
         <div className="row">
           {!banners.loading &&
             banners.banners.map((item) => (
-              <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
+              <div className="col-12 col-md-6 col-lg-4 mt-3" key={item.id}>
                 <Card
                   img={item.img}
                   title={item.title}
@@ -247,7 +247,7 @@ export default function Banner() {
               img: "",
               title: "",
               content: "",
-              _id: "",
+              id: "",
             });
             setModalShow(false);
           }}

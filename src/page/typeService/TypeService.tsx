@@ -21,7 +21,7 @@ export default function TypeService() {
   const { loading, data } = useFetch(getServiceType);
   const [listTypeService, setListTypeService] = useState<any>();
   const [typeService, setTypeService] = useState<TypeServiceModel>({
-    _id: "",
+    id: "",
     image: "",
     description: "",
     serviceType: "",
@@ -34,7 +34,7 @@ export default function TypeService() {
       image: item.image,
       serviceType: item.serviceType,
       description: item.description,
-      _id: item._id,
+      id: item.id,
     }));
     setModalShow(true);
   };
@@ -42,10 +42,10 @@ export default function TypeService() {
   const handleDeleteTypeService = (item: TypeServiceModel) => {
     const deleteTypeService = async () => {
       try {
-        await deleteServiceType(item._id);
+        await deleteServiceType(item.id);
         Alert("error", "Xoá ảnh thành công");
         setListTypeService((pre: any) =>
-          pre.filter((type: TypeServiceModel) => type._id !== item._id)
+          pre.filter((type: TypeServiceModel) => type.id !== item.id)
         );
       } catch (error) {
         Alert("error", "Lỗi hệ thống");
@@ -95,7 +95,7 @@ export default function TypeService() {
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
         const updateTypes = listTypeService.filter(
-          (item: TypeServiceModel) => res.data._id !== item._id
+          (item: TypeServiceModel) => res.data.id !== item.id
         );
         setListTypeService([
           ...updateTypes,
@@ -112,7 +112,7 @@ export default function TypeService() {
         setModalShow(false);
         Alert("success", "Cập nhật ảnh thành công");
         const updateTypes = listTypeService.filter(
-          (item: TypeServiceModel) => res.data._id !== item._id
+          (item: TypeServiceModel) => res.data.id !== item.id
         );
         setListTypeService([...updateTypes, res.data]);
       } catch (error) {
@@ -209,7 +209,7 @@ export default function TypeService() {
                 listTypeService.map((item: TypeServiceModel) => (
                 <div className="col-12 col-md-6">
                   <ItemList
-                    key={item._id}
+                    key={item.id}
                     img={item.image}
                     title={item.serviceType}
                     content={item.description}
@@ -227,7 +227,7 @@ export default function TypeService() {
         onHide={() => {
           setModalShow(false);
           setTypeService({
-            _id: "",
+            id: "",
             image: "",
             description: "",
             serviceType: "",

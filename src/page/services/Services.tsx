@@ -24,7 +24,7 @@ export default function Services() {
         name: "",
         serviceType: "",
         image: "",
-        _id: "",
+        id: "",
       },
     ],
     error: "",
@@ -122,7 +122,7 @@ export default function Services() {
           <div className="row">
             {!services.loading &&
               services.data.map((item: ServiceModel) => (
-                <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
+                <div className="col-12 col-md-6 col-lg-4 mt-3" key={item.id}>
                   <Card
                     img={item.image}
                     title={item.name}
@@ -148,7 +148,7 @@ export default function Services() {
             name: "",
             serviceType: "",
             image: "",
-            _id: "",
+            id: "",
           });
         }}
         title={

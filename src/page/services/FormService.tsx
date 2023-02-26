@@ -43,7 +43,7 @@ function FormService({ service, setService }: Props, ref: any) {
             <option value="">Chọn loại dịch vụ</option>
             {!loading &&
               data.map((item: TypeServiceModel) => (
-                <option key={item._id} value={item._id}>
+                <option key={item.id} value={item.id}>
                   {item.serviceType}
                 </option>
               ))}

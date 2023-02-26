@@ -1,5 +1,5 @@
 export interface AboutModel {
-  _id?: string;
+  id?: string;
   title?: string;
   avatar?: string;
   description1?: string;

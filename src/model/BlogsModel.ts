@@ -5,5 +5,5 @@ export interface BlogModel {
   createdAt?: String,
   title?: String,
   updatedAt?: String,
-  _id?: String,
+  id?: String,
 }

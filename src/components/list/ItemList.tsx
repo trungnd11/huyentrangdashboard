@@ -6,7 +6,7 @@ export default function ItemList(prop: {
   content?: string;
   description?: string | any[];
   address?: {
-    _id?: string;
+    id?: string;
     apartmentNumber: string;
     commune: string;
     district: string;

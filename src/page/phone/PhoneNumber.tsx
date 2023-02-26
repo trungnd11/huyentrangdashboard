@@ -71,7 +71,7 @@ export default function PhoneNumber() {
 
   const validate = useFormik({
     initialValues: {
-      _id: "",
+      id: "",
       nameUser: "",
       phoneNumber: 0,
       position: "",
@@ -175,9 +175,9 @@ export default function PhoneNumber() {
           <div className="row">
             {!loading &&
               data.map((item: PhoneModel) => (
-                <div key={item._id} className="col-12 col-md-6 col-lg-4">
+                <div key={item.id} className="col-12 col-md-6 col-lg-4">
                   <ItemList
-                    key={item._id}
+                    key={item.id}
                     phone={{
                       phoneNumber: item.phoneNumber,
                       nameUser: item.nameUser,
@@ -189,9 +189,9 @@ export default function PhoneNumber() {
                       validate.setFieldValue("phoneNumber", item.phoneNumber);
                       validate.setFieldValue("nameUser", item.nameUser);
                       validate.setFieldValue("position", item.position);
-                      validate.setFieldValue("_id", item._id);
+                      validate.setFieldValue("id", item.id);
                     }}
-                    handleDelete={() => handleDeletePhone(item._id)}
+                    handleDelete={() => handleDeletePhone(item.id)}
                   />
                 </div>
               ))}

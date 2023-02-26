@@ -68,7 +68,7 @@ export default function Address() {
 
   const validate = useFormik({
     initialValues: {
-      _id: "",
+      id: "",
       apartmentNumber: "",
       commune: "",
       conscious: "",
@@ -192,13 +192,13 @@ export default function Address() {
             {!loading &&
               data.map((item: AddressModel, index: number) => (
                 <div
-                  key={item._id}
+                  key={item.id}
                   className={`col-12 col-md-6 col-lg-4 ${
                     index !== 0 && "mt-3 mt-lg-0"
                   }`}
                 >
                   <ItemList
-                    key={item._id}
+                    key={item.id}
                     address={{
                       apartmentNumber: item.apartmentNumber,
                       commune: item.commune,
@@ -215,9 +215,9 @@ export default function Address() {
                       validate.setFieldValue("commune", item.commune);
                       validate.setFieldValue("conscious", item.conscious);
                       validate.setFieldValue("district", item.district);
-                      validate.setFieldValue("_id", item._id);
+                      validate.setFieldValue("id", item.id);
                     }}
-                    handleDelete={() => handleDeleteAddress(item._id)}
+                    handleDelete={() => handleDeleteAddress(item.id)}
                   />
                 </div>
               ))}

@@ -20,7 +20,7 @@ export default function Expert() {
   const handleEditExpert = (expert: ExpertModel) => {
     setStatus("Update");
     setModalShow(true);
-    validate.setFieldValue("_id", expert._id);
+    validate.setFieldValue("id", expert.id);
     validate.setFieldValue("avatar", expert.avatar);
     validate.setFieldValue("name", expert.name);
     validate.setFieldValue("positon", expert.positon);
@@ -129,7 +129,7 @@ export default function Expert() {
 
   const validate = useFormik({
     initialValues: {
-      _id: "",
+      id: "",
       avatar: "",
       name: "",
       positon: "",
@@ -329,7 +329,7 @@ export default function Expert() {
           <div className="row">
             {!loading &&
               data.map((item: ExpertModel) => (
-                <div className="col-12 col-md-6 col-lg-4 mt-3" key={item._id}>
+                <div className="col-12 col-md-6 col-lg-4 mt-3" key={item.id}>
                   <Card
                     img={item.avatar}
                     title={item.positon}
@@ -339,7 +339,7 @@ export default function Expert() {
                     linkInsta={item.linkInsta}
                     linkMess={item.linkMess}
                     handleEdit={() => handleEditExpert(item)}
-                    handleDelete={() => handleDeleteExprt(item._id, item.avatar)}
+                    handleDelete={() => handleDeleteExprt(item.id, item.avatar)}
                   />
                 </div>
               ))}

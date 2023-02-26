@@ -12,4 +12,4 @@ export const createService = (service: ServiceModel) => axios.post(servicesUrl, 
 export const updateService = (service: ServiceModel) =>
   axios.put(servicesUrl, service);
 
-export const deleteService = (service: ServiceModel) => axios.delete(`${servicesUrl}/${service._id}`);
+export const deleteService = (service: ServiceModel) => axios.delete(`${servicesUrl}/${service.id}`);

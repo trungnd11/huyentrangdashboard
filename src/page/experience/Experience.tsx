@@ -69,7 +69,7 @@ export default function Experience() {
 
   const validate = useFormik({
     initialValues: {
-      _id: "",
+      id: "",
       name: "",
     },
     validationSchema: Yup.object({
@@ -123,17 +123,17 @@ export default function Experience() {
           <div className="row">
             {!loading &&
               data?.map((item: ExperienceModel) => (
-                <div className="col-12 col-lg-6 mt-3" key={item._id}>
+                <div className="col-12 col-lg-6 mt-3" key={item.id}>
                   <ItemList
                     title={item.name}
                     content={`Ngày tạo: ${item.updatedAt}`}
                     handleEdit={() => {
                       setStatus("Update");
-                      validate.setFieldValue("_id", item._id);
+                      validate.setFieldValue("id", item.id);
                       validate.setFieldValue("name", item.name);
                       setModalShow(true);
                     }}
-                    handleDelete={() => handleDeleteExperience(item._id)}
+                    handleDelete={() => handleDeleteExperience(item.id)}
                   />
                 </div>
               ))}
