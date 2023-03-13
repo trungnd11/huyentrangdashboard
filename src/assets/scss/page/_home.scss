@@ -248,6 +248,10 @@
       }
     }
 
+    @include Responsive(MD) {
+      width: 75%;
+    }
+
     @include Responsive(XXL) {
       width: 20%;
     }
