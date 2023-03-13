@@ -10,3 +10,32 @@
     }
   }
 }
+
+.paginate-services {
+  ul {
+    display: flex;
+    justify-content: end;
+    list-style-type: none;
+    margin-bottom: 0;
+
+    li {
+      padding: .5rem 1rem;
+      border: 1px solid $main-color;
+      cursor: pointer;
+    }
+
+    li.selected {
+      background-color: $main-color;
+      color: $white;
+    }
+
+    li.disabled {
+      cursor: not-allowed;
+      background-color: $gray;
+      
+      a {
+        color: $black;
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import { createService, getServicesByType, updateService } from "../../api/servicesApi";
 import Alert from "../../components/alert/Alert";
@@ -8,6 +9,7 @@ import Card from "../../components/card/Card";
 import ModalCommom from "../../components/modal/ModalCommom";
 import { AlertMessage, AlertType, TypeModal } from "../../enum/Enum";
 import { uploadImageToFireBase } from "../../firebase/uploadImage";
+import { OptionPageModel } from "../../model/components/OptionPageModel";
 import { ServiceModel } from "../../model/ServiceModel";
 import FormService from "./FormService";
 import { validationForm } from "./Validate";
@@ -27,19 +29,25 @@ export default function Services() {
         id: "",
       },
     ],
+    totalPage: 0,
     error: "",
   });
   const [service, setService] = useState<ServiceModel>();
   const refForm = useRef<{ image: File }>();
+  const [optionPage, setOptionPage] = useState<OptionPageModel>({
+    page: 0,
+    limit: 6
+  });
   const [reset, setReset] = useState(false);
 
-  const getServicesByTypes = async (typeService: { serviceType?: string }) => {
+  const getServicesByTypes = async (typeService: { serviceType?: string }, optionPage?: OptionPageModel) => {
     try {
-      const res = await getServicesByType(typeService);
+      const { data } = await getServicesByType(typeService, optionPage);
       setServices((pre) => ({
         ...pre,
         loading: false,
-        data: res.data,
+        data: data?.docs,
+        totalPage: data?.totalPages
       }));
     } catch (error) {
       Alert(AlertType.ERROR, AlertMessage.ERROR);
@@ -100,8 +108,8 @@ export default function Services() {
 
   useEffect(() => {
     document.title = `Dịch vụ - ${services.data[0].serviceType}`;
-    getServicesByTypes({ serviceType: type });
-  }, [type, reset]);
+    getServicesByTypes({ serviceType: type }, optionPage);
+  }, [type, reset, optionPage]);
 
   return (
     <>
@@ -136,6 +144,14 @@ export default function Services() {
                   />
                 </div>
               ))}
+          </div>
+          <div className="row paginate-services mt-3">
+            <ReactPaginate
+              pageCount={services.totalPage}
+              onPageChange={(page) => setOptionPage((pre) => ({ ...pre, page: page.selected + 1 }))}
+              previousLabel="<"
+              nextLabel=">"
+            />
           </div>
         </div>
       </div>
